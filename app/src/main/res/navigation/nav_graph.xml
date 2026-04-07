@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/homeFragment"
+    android:id="@+id/nav_graph">
+
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.example.reater.ui.fragments.QuizFragment"
+        android:label="fragment_quiz"
+        tools:layout="@layout/fragment_quiz" >
+        <action
+            android:id="@+id/action_quizFragment_to_ongoingQuizActivity"
+            app:destination="@id/ongoingQuizActivity" />
+        <action
+            android:id="@+id/action_quizFragment_to_ongoingQuizFragment"
+            app:destination="@id/ongoingQuizFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.reater.ui.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailsActivity"
+            app:destination="@id/detailsActivity" />
+        <action
+            android:id="@+id/action_homeFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/assignmentFragment"
+        android:name="com.example.reater.ui.fragments.AssignmentFragment"
+        android:label="fragment_assignment"
+        tools:layout="@layout/fragment_assignment" >
+        <action
+            android:id="@+id/action_assignmentFragment_to_assignmentDetailsFragment"
+            app:destination="@id/assignmentDetailsFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/detailsActivity"
+        android:name="com.example.reater.ui.activities.DetailsActivity"
+        android:label="activity_details"
+        tools:layout="@layout/activity_details" >
+        <argument
+            android:name="coursework"
+            app:argType="com.example.reater.models.Coursework" />
+    </activity>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.example.reater.ui.fragments.UserProfileFragment"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/assignmentDetailsFragment"
+        android:name="com.example.reater.ui.fragments.AssignmentDetailsFragment"
+        android:label="AssignmentDetailsFragment" >
+        <argument
+            android:name="assignment"
+            app:argType="com.example.reater.models.Assignment" />
+    </fragment>
+    <activity
+        android:id="@+id/ongoingQuizActivity"
+        android:name="com.example.reater.ui.activities.OngoingQuizActivity"
+        android:label="OngoingQuizActivity" >
+        <argument
+            android:name="quiz"
+            app:argType="com.example.reater.models.Quiz" />
+    </activity>
+    <fragment
+        android:id="@+id/ongoingQuizFragment"
+        android:name="com.example.reater.ui.fragments.OngoingQuizFragment"
+        android:label="OngoingQuizFragment" >
+        <argument
+            android:name="quiz"
+            app:argType="com.example.reater.models.Quiz" />
+    </fragment>
+    <fragment
+        android:id="@+id/notesFragment2"
+        android:name="com.example.reater.ui.fragments.NotesFragment"
+        android:label="fragment_notes"
+        tools:layout="@layout/fragment_notes" />
+</navigation>

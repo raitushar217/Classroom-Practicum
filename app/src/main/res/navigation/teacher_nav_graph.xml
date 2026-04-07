@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/teacher_nav_graph"
+    app:startDestination="@id/teacherHomeFragment">
+
+    <fragment
+        android:id="@+id/teacherClassDetailsFragment"
+        android:name="com.example.reater.teacherapp.fragments.TeacherClassDetailsFragment"
+        android:label="TeacherClassDetailsFragment" >
+
+        <action
+            android:id="@+id/action_teacherClassDetailsFragment_to_teacherQuizFragment"
+            app:destination="@id/teacherQuizFragment" />
+        <action
+            android:id="@+id/action_teacherClassDetailsFragment_to_teacherAssignmentFragment"
+            app:destination="@id/teacherAssignmentFragment" />
+        <action
+            android:id="@+id/action_teacherClassDetailsFragment_to_teacherParticipantsFragment2"
+            app:destination="@id/teacherParticipantsFragment2" />
+        <action
+            android:id="@+id/action_teacherClassDetailsFragment_to_studyMaterialsFragment"
+            app:destination="@id/studyMaterialsFragment" />
+        <action
+            android:id="@+id/action_teacherClassDetailsFragment_to_teacherAnnouncementsFragment"
+            app:destination="@id/teacherAnnouncementsFragment" />
+        <argument
+            android:name="course"
+            app:argType="com.example.reater.models.Coursework" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherHomeFragment"
+        android:name="com.example.reater.teacherapp.fragments.TeacherHomeFragment"
+        android:label="fragment_teacher_home"
+        tools:layout="@layout/fragment_teacher_home" >
+        <action
+            android:id="@+id/action_teacherHomeFragment_to_teacherClassDetailsFragment"
+            app:destination="@id/teacherClassDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/assignmentUploadFragment"
+        android:name="com.example.reater.teacherapp.fragments.TeacherAssignments.AssignmentUploadFragment"
+        android:label="AssignmentUploadFragment" />
+    <fragment
+        android:id="@+id/teacherAssignmentFragment"
+        android:name="com.example.reater.teacherapp.fragments.TeacherAssignments.TeacherAssignmentFragment"
+        android:label="fragment_teacher_assignment"
+        tools:layout="@layout/fragment_teacher_assignment" >
+        <action
+            android:id="@+id/action_teacherAssignmentFragment_to_assignmentUploadFragment"
+            app:destination="@id/assignmentUploadFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherQuizFragment"
+        android:name="com.example.reater.teacherapp.fragments.TeacherQuiz.TeacherQuizFragment"
+        android:label="fragment_teacher_quiz"
+        tools:layout="@layout/fragment_teacher_quiz" />
+    <fragment
+        android:id="@+id/teacherParticipantsFragment2"
+        android:name="com.example.reater.teacherapp.fragments.TeacherParticipantsFragment"
+        android:label="fragment_teacher_participants"
+        tools:layout="@layout/fragment_teacher_participants" />
+    <fragment
+        android:id="@+id/addStudyMaterialFragment"
+        android:name="com.example.reater.teacherapp.fragments.TeacherStudyMaterial.AddStudyMaterialFragment"
+        android:label="fragment_add_study_material"
+        tools:layout="@layout/fragment_add_study_material" />
+    <fragment
+        android:id="@+id/studyMaterialsFragment"
+        android:name="com.example.reater.teacherapp.fragments.TeacherStudyMaterial.StudyMaterialsFragment"
+        android:label="fragment_study_materials"
+        tools:layout="@layout/fragment_study_materials" >
+        <action
+            android:id="@+id/action_studyMaterialsFragment_to_addStudyMaterialFragment"
+            app:destination="@id/addStudyMaterialFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherAnnouncementsFragment"
+        android:name="com.example.reater.teacherapp.fragments.TeacherAnnouncement.TeacherAnnouncementsFragment"
+        android:label="fragment_teacher_announcements"
+        tools:layout="@layout/fragment_teacher_announcements" >
+        <action
+            android:id="@+id/action_teacherAnnouncementsFragment_to_teacherPostFragment"
+            app:destination="@id/teacherPostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teacherPostFragment"
+        android:name="com.example.reater.teacherapp.fragments.TeacherAnnouncement.TeacherPostFragment"
+        android:label="fragment_teacher_post"
+        tools:layout="@layout/fragment_teacher_post" >
+        <action
+            android:id="@+id/action_teacherPostFragment_to_teacherAnnouncementsFragment"
+            app:destination="@id/teacherAnnouncementsFragment" />
+        <argument
+            android:name="classID"
+            app:argType="string" />
+        <argument android:name="subjectID"
+            app:argType="string" />
+        <argument
+            android:name="subjectName"
+            app:argType="string" />
+    </fragment>
+
+</navigation>

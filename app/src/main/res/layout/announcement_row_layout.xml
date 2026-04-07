@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="individual_announcement"
+            type="com.example.reater.models.Announcement" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="6dp"
+        android:background="@drawable/rounded_bottom_rectangle"
+        >
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="24dp"
+            android:background="@drawable/tcr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/Teacher_image"
+            loadImageFromUrl="@{individual_announcement.authorpicture}"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+
+
+            android:scaleType="centerCrop"
+            android:src="@drawable/castle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <TextView
+            android:id="@+id/Post_Author_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{individual_announcement.author}"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:fontFamily="sans-serif-medium"
+            app:layout_constraintStart_toEndOf="@+id/Teacher_image"
+            app:layout_constraintTop_toTopOf="@+id/Teacher_image" />
+
+        <TextView
+            android:id="@+id/Post_Timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@{individual_announcement.timeStamp}"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif"
+            app:layout_constraintStart_toEndOf="@+id/Teacher_image"
+            app:layout_constraintTop_toBottomOf="@+id/Post_Author_Name" />
+
+        <TextView
+            android:id="@+id/Announcement_Description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="5dp"
+            android:padding="6dp"
+            android:text="@{individual_announcement.description}"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="13sp"
+            android:fontFamily="sans-serif"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Teacher_image" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

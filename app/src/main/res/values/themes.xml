@@ -1,0 +1,57 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Reater" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Brand colors -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+
+        <!-- App surfaces -->
+        <item name="android:colorBackground">@color/backgroundColor</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
+
+        <!-- Default typography -->
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+
+    <style name="CustomTabLayoutStyle"
+        parent="Widget.Design.TabLayout">
+
+        <item name="background">@color/GunmetalGray</item>
+        <item name="tabIndicatorColor">@color/Cream</item>
+        <item name="tabIndicatorHeight">1dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="tabSelectedTextColor">@color/Cream</item>
+    </style>
+    <style name="CustomTabTextStyle" parent="TextAppearance.Design.Tab">
+    <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- Bottom Navigation Styles -->
+    <style name="BottomNavActiveIndicator" parent="">
+        <item name="android:color">@color/premium_blue_light</item>
+        <item name="shapeAppearanceOverlay">@style/BottomNavIndicatorShape</item>
+    </style>
+
+    <style name="BottomNavIndicatorShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="BottomNavTextActive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">sans-serif-medium</item>
+    </style>
+
+    <style name="BottomNavTextInactive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">11sp</item>
+        <item name="fontFamily">sans-serif</item>
+    </style>
+</resources>

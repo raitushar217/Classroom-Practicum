@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1976D2</color>
+    <color name="colorPrimaryVariant">#004BA0</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorSecondary">#FFC107</color>
+    <color name="colorSecondaryVariant">#C79100</color>
+    <color name="colorOnSecondary">#000000</color>
+    <color name="colorError">#D32F2F</color>
+    <color name="colorOnError">#FFFFFF</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorOnSurface">#212121</color>
+    <color name="backgroundColor">#F5F5F5</color>
+    <color name="textColor">#212121</color>
+    <color name="textColorHint">#757575</color>
+    <color name="cardBackgroundColor">#FFFFFF</color>
+    <color name="dividerColor">#BDBDBD</color>
+    <color name="button_gradient_start">#03D976</color>
+    <color name="button_gradient_end">#00B6CE</color>
+    <color name="white">#FFFFFF</color>
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+
+    <color name="mistyighter">#c8d8e4</color>
+    <color name="CoffeePot">#A49393</color>
+    <color name="Cream">#F6EEE0</color>
+    <color name="lightpeach">#E4B7A0</color>
+    <color name="PEACH">#C38370</color>
+    <color name="GunmetalGray">#738580</color>
+    <color name="Pewter">#B9B7BD</color>
+    <color name="ScallopSeashell">#E7D2CC</color>
+    <color name="Greyish">#D3D3D3</color>
+    <color name="CadetBlue">#004445</color>
+    <color name="AutumnFoliage">#763626</color>
+    <color name="dark">#313C44</color>
+    <color name="lightfluroyello">#D0ED2D</color>
+    <color name="lightviolet">#543c52</color>
+    <color name="lightpeachypinkorange">#E05C55</color>
+    <color name="darkviolet">#361d32</color>
+    <color name="BalticSeabgcolor">#28242c</color>
+    <color name="anotherbgcolor">#A95A575F</color>
+    <color name="purplishbg">#C0B7D5</color>
+    <color name="whitishyellow">#FAF1ECDD</color>
+    <color name="backgroundwhitishbg">#fef9f8</color>
+    <color name="greenishbg">#172B33</color>
+    <color name="anothergoodinputcolor">#FAF0EEE8</color>
+    <color name="purplish">#CEC8D0</color>
+    <color name="darkgreygreen">#BD52524C</color>
+    <color name="BUTTONBLUE">#4A5592</color>
+    <color name="glightGray">#F9F9F9</color>
+    <color name="mainactivitybg">#272537</color>
+    <color name="lightsalmon">#FFA07A</color>
+    <color name="coral">#FF7F50</color>
+    <color name="darkorange">#FF8C00</color>
+
+    <color name="yellow">#FFCF54</color>
+    <color name="slightgrey">#91a2b4</color>
+    <color name="maybecyant">#cbeadc</color>
+    <color name="ShadeofDark">#283036</color>
+
+    <color name="goodhwite">#F0F0F0</color>
+    <color name="brightgreen">#8AE98D</color>
+    <color name="mixred">#FC574E</color>
+
+    <color name="gradient1">#03D976</color>
+    <color name="gradient2">#00B6CE</color>
+    <color name="nice_blue">#1957C8</color>
+
+    <color name="slightlydarkishwhite">#FAE7E6E5</color>
+
+    <color name="whiteee">#FAE7E6E5</color>
+
+    <color name="sblack">#2C3051</color>
+    <color name="lightdarkblue">#53588A</color>
+    <color name="verylightblue">#9BA5FF</color>
+    <color name="reddie">#F04444</color>
+    <color name="newblack">#0C3B2E</color>
+    <color name="good_black">#111112</color>
+    <color name="goodyellow">#E3B411</color>
+    
+    <!-- Premium UI Colors -->
+    <color name="premium_blue">#2563EB</color>
+    <color name="premium_blue_light">#3B82F6</color>
+    <color name="premium_purple">#8B5CF6</color>
+    <color name="premium_orange">#F59E0B</color>
+    <color name="premium_background">#F8FAFC</color>
+    <color name="premium_card">#FFFFFF</color>
+    <color name="premium_text_primary">#0F172A</color>
+    <color name="premium_text_secondary">#475569</color>
+    <color name="premium_text_tertiary">#94A3B8</color>
+</resources>
+
