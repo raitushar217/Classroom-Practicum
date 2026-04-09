@@ -93,5 +93,15 @@
     <color name="premium_text_primary">#0F172A</color>
     <color name="premium_text_secondary">#475569</color>
     <color name="premium_text_tertiary">#94A3B8</color>
+    
+    <!-- IIIT Una Brand Colors -->
+    <color name="iiitu_navy">#003366</color>
+    <color name="iiitu_navy_dark">#002244</color>
+    <color name="iiitu_navy_light">#004488</color>
+    <color name="iiitu_gold">#FFB81C</color>
+    <color name="iiitu_gold_light">#FFC94D</color>
+    <color name="iiitu_white">#FFFFFF</color>
+    <color name="iiitu_light_bg">#F5F7FA</color>
+    <color name="iiitu_accent">#0066CC</color>
 </resources>
 

@@ -1,174 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:attr/colorBackground"
+    android:background="?attr/colorSurface"
     tools:context=".ui.fragments.QuizFragment">
 
-
+    <!-- Header Box -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/quiz_titlebox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:cardCornerRadius="20dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
+        app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
-        app:strokeWidth="1dp"
+        app:strokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
             <ImageView
                 android:id="@+id/quiz_icon"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/quiz_new_icon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:tint="?attr/colorOnPrimaryContainer" />
 
             <TextView
                 android:id="@+id/quiz_Text"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="Quizzes"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="24sp"
+                android:layout_marginStart="12dp"
                 android:fontFamily="sans-serif-medium"
-                app:layout_constraintBottom_toBottomOf="@+id/quiz_icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/quiz_icon"
-                app:layout_constraintTop_toTopOf="@+id/quiz_icon" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:text="Quizzes"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <!-- Quiz Category Filters -->
     <HorizontalScrollView
         android:id="@+id/quiz_horizontalScrollView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="24dp"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/quiz_titlebox">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="2dp">
+            android:paddingVertical="4dp">
 
+            <!-- Upcoming Quizzes Chip -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/uq_card"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                app:cardBackgroundColor="?attr/colorSurface"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                app:cardBackgroundColor="?attr/colorPrimary"
                 app:cardCornerRadius="24dp"
-                app:strokeColor="?attr/colorOnSurface"
-                app:strokeWidth="1dp">
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp">
 
                     <ImageView
                         android:id="@+id/uq_icon"
-                        android:layout_width="40dp"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/future" />
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/quiz_new_icon"
+                        app:tint="?attr/colorOnPrimary" />
 
                     <TextView
                         android:id="@+id/uq_text"
                         android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginEnd="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
                         android:text="Upcoming Quizzes"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-
-                        app:layout_constraintStart_toEndOf="@+id/uq_icon"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.375" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:textColor="?attr/colorOnPrimary"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Past Quizzes Chip -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/pq_card"
-                android:layout_width="220dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                app:cardBackgroundColor="?attr/colorSurface"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
                 app:cardCornerRadius="24dp"
-                app:strokeColor="?attr/colorOnSurface"
-                app:strokeWidth="1dp">
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp">
 
                     <ImageView
                         android:id="@+id/pq_icon"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/past" />
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        app:srcCompat="@drawable/quizicon"
+                        app:tint="?attr/colorOnSurfaceVariant" />
 
                     <TextView
                         android:id="@+id/pq_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
+                        android:layout_marginStart="8dp"
                         android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
                         android:text="Past Quizzes"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.153"
-
-                        app:layout_constraintStart_toEndOf="@+id/pq_icon"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:textSize="14sp" />
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </HorizontalScrollView>
 
+    <!-- Content List -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/quizRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:clipToPadding="false"
+        android:paddingHorizontal="8dp"
         android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quiz_horizontalScrollView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/quiz_horizontalScrollView" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,10 @@
-package com.example.reater.ui.activities
+﻿package com.example.reater.ui.activities
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.navArgs
@@ -21,13 +23,22 @@ class OngoingQuizActivity : AppCompatActivity() {
     private val qadapter by lazy {QuestionIndexAdapter()}
     private var backButtonPressed = false
 
+    // Track user answers (Key: Question Index, Value: Selected Option String)
+    private val userAnswers = mutableMapOf<Int, String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // PROCTORING: Prevent screenshots and screen recording
+        window.setFlags(
+            android.view.WindowManager.LayoutParams.FLAG_SECURE,
+            android.view.WindowManager.LayoutParams.FLAG_SECURE
+        )
+
         binding = ActivityOngoingQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
          quiz = args.quiz
-        //qadapter.questionCount=quiz.quizList.size
         binding.question=quiz.quizList[0]
         setupUi()
 
@@ -37,27 +48,89 @@ class OngoingQuizActivity : AppCompatActivity() {
         binding.qnoRV.adapter=qadapter
         binding.qnoRV.layoutManager=LinearLayoutManager(this)
         binding.progressBar3.max=quiz.quizDuration.toInt()*60000
+        
+        updateQuestionUI()
+
         binding.previousQuestion.setOnClickListener {
             if (currentQuestionIndex == 0) {
                 Toast.makeText(this, "This is the first question only", Toast.LENGTH_SHORT).show()
             } else {
+                saveCurrentAnswer()
                 currentQuestionIndex--
-                binding.question = quiz.quizList[currentQuestionIndex]
+                updateQuestionUI()
             }
         }
 
         binding.nextQuestion.setOnClickListener {
+            saveCurrentAnswer()
             if (currentQuestionIndex == quiz.quizList.size - 1) {
-                Toast.makeText(this, "This is the last question", Toast.LENGTH_SHORT).show()
+                submitQuiz()
             } else {
                 currentQuestionIndex++
-                binding.question = quiz.quizList[currentQuestionIndex]
+                updateQuestionUI()
             }
         }
 
-
-
         startTimer()
+    }
+
+    private fun saveCurrentAnswer() {
+        val selectedId = binding.radioGroup.checkedRadioButtonId
+        if (selectedId != -1) {
+            val selectedRadioButton = findViewById<RadioButton>(selectedId)
+            userAnswers[currentQuestionIndex] = selectedRadioButton.text.toString()
+        } else {
+            // Remove entry if user cleared the choice (optional)
+            userAnswers.remove(currentQuestionIndex)
+        }
+    }
+
+    private fun updateQuestionUI() {
+        binding.question = quiz.quizList[currentQuestionIndex]
+        binding.radioGroup.clearCheck() // Clear selected radio button naturally
+
+        // Restore previous answer if they revisit the question
+        val previousAnswer = userAnswers[currentQuestionIndex]
+        if (previousAnswer != null) {
+            when (previousAnswer) {
+                binding.radioButton1.text.toString() -> binding.radioButton1.isChecked = true
+                binding.radioButton2.text.toString() -> binding.radioButton2.isChecked = true
+                binding.radioButton3.text.toString() -> binding.radioButton3.isChecked = true
+                binding.radioButton4.text.toString() -> binding.radioButton4.isChecked = true
+            }
+        }
+        
+        if (currentQuestionIndex == quiz.quizList.size - 1) {
+            binding.nextQuestion.text = "Submit Quiz"
+        } else {
+            binding.nextQuestion.text = "Next Question"
+        }
+    }
+
+    private fun submitQuiz() {
+        timer.cancel()
+        saveCurrentAnswer() // Ensure last action is captured
+
+        var score = 0
+        val total = quiz.quizList.size
+
+        for (i in 0 until total) {
+            val correctAns = quiz.quizList[i].CorrectAnswer
+            val userAns = userAnswers[i]
+            
+            // Note: Trimming whitespace just in case options have trailing spaces
+            if (userAns?.trim() == correctAns.trim()) {
+                score++
+            }
+        }
+
+        Toast.makeText(this, "Quiz has been submitted.", Toast.LENGTH_SHORT).show()
+        
+        val intent = Intent(this, QuizResultActivity::class.java)
+        intent.putExtra("FINAL_SCORE", score)
+        intent.putExtra("TOTAL_QUESTIONS", total)
+        startActivity(intent)
+        finish()
     }
 
     private fun startTimer() {
@@ -67,48 +140,46 @@ class OngoingQuizActivity : AppCompatActivity() {
                 val totalSecondsLeft = millisUntilFinished / 1000
                 val minutesLeft = totalSecondsLeft / 60
                 val secondsLeft = totalSecondsLeft % 60
-                binding.editTextTime.text = "$minutesLeft:${String.format("%02d", secondsLeft)}" // Format seconds to always display 2 digits
+                binding.editTextTime.text = "${minutesLeft}:${String.format("%02d", secondsLeft)}" // Format seconds to always display 2 digits
             }
 
             override fun onFinish() {
-                finish()
+                submitQuiz() // Auto-submit when time finishes
             }
         }
         timer.start()
     }
+
     private fun showAlertDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("Do you really want to go back?")
-        builder.setPositiveButton("Yes") { _, _ ->
-            finish() // Finish the activity when "Yes" is clicked
+        builder.setTitle("Submit Quiz?")
+        builder.setMessage("Are you sure you want to leave? This action will forcefully submit your active quiz.")
+        builder.setPositiveButton("Submit") { _, _ ->
+            submitQuiz()
         }
-        builder.setNegativeButton("No") { dialog, _ ->
-            dialog.dismiss() // Dismiss the dialog when "No" is clicked
-            startTimer() // Restart the timer
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss() 
+            startTimer() 
         }
-        builder.setCancelable(false) // Prevent dismissing dialog on outside touch or back press
+        builder.setCancelable(false) 
         builder.create().show()
     }
 
-    /*override fun onStop() {
-        super.onStop()
-        finish()
-    }*/
-
     override fun onBackPressed() {
-        super.onBackPressed()
-        // Handle back press event
-        if (backButtonPressed) {
-            // Display AlertDialog only if back button pressed twice within 2 seconds
-
-            showAlertDialog()
-
-        } else {
-            backButtonPressed = true
-            timer.start() // Start the timer to reset backButtonPressed after 2 seconds
-            // Optionally, you can display a toast or message here indicating that another press is needed
-        }
+        timer.cancel() 
+        showAlertDialog()
     }
 
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        Toast.makeText(this, "Quiz forcefully submitted due to app switching/minimizing!", Toast.LENGTH_LONG).show()
+        submitQuiz()
+    }
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (!hasFocus) {
+            Toast.makeText(this, "Proctoring Warning: Please do not change windows or open notifications!", Toast.LENGTH_SHORT).show()
+        }
+    }
 }

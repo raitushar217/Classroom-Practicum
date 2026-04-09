@@ -122,7 +122,7 @@
         android:paddingStart="7dp"
         android:paddingEnd="7dp"
         android:paddingBottom="7dp"
-        android:text="KojoClass App"
+        android:text="IIIT Una"
         android:textColor="?attr/colorOnSurface"
         android:textSize="26sp"
         android:fontFamily="sans-serif-black"

@@ -7,7 +7,7 @@
     android:background="?android:attr/colorBackground"
     tools:context=".ui.fragments.HomeFragment">
 
-
+    <!-- Header Greeting Card -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardcontainer"
         android:layout_width="0dp"
@@ -15,9 +15,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer"
         app:cardCornerRadius="20dp"
-        app:cardElevation="0dp"
-        app:strokeWidth="1dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -31,8 +32,9 @@
                 android:id="@+id/greeting_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Greetings"
-                android:textColor="?attr/colorOnSurface"
+                android:text="Greetings,"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:alpha="0.8"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -41,93 +43,98 @@
                 android:id="@+id/greeting_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="2dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="Madhav Sharma"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="24sp"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:textSize="22sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/profile_picture"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/greeting_time" />
 
             <ImageView
                 android:id="@+id/profile_picture"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/house"
-                app:layout_constraintBottom_toBottomOf="@+id/greeting_value"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/greeting_value" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <!-- Search Bar -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/searchbar"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="16dp"
-        app:boxBackgroundMode="outline"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="12dp"
         app:boxCornerRadiusBottomEnd="16dp"
         app:boxCornerRadiusBottomStart="16dp"
         app:boxCornerRadiusTopEnd="16dp"
         app:boxCornerRadiusTopStart="16dp"
-        app:endIconMode="custom"
-        app:endIconDrawable="@drawable/microphone2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:endIconMode="clear_text"
+        app:hintEnabled="false"
         app:startIconDrawable="@android:drawable/ic_menu_search"
-        app:hintEnabled="true"
-        android:hint="Search classes">
+        app:layout_constraintEnd_toStartOf="@+id/imageView8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardcontainer">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/searchView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Search classes"
             android:inputType="text"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Filter Icon -->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView8"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/filter"
+        app:civ_border_color="?attr/colorPrimary"
+        app:civ_border_width="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/searchbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/searchbar" />
+
+    <!-- Section Title -->
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:text="All Classes"
         android:textColor="?attr/colorOnSurface"
-        android:textSize="18sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardcontainer" />
+        app:layout_constraintTop_toBottomOf="@+id/searchbar" />
 
+    <!-- Recycler View -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/classRV"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="12dp"
         android:clipToPadding="false"
+        android:paddingHorizontal="8dp"
         android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchbar" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageView8"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/filter"
-        app:civ_border_color="@color/ShadeofDark"
-        app:civ_border_width="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/searchbar"
-        app:layout_constraintEnd_toEndOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

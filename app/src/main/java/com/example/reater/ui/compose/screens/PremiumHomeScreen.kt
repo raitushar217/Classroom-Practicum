@@ -1,5 +1,6 @@
 package com.example.reater.ui.compose.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,8 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.reater.R
 import com.example.reater.models.Coursework
 import com.example.reater.ui.compose.components.PremiumClassCard
 import com.example.reater.ui.compose.components.PremiumSearchBar
@@ -55,7 +58,7 @@ fun PremiumHomeScreen(
                 .padding(paddingValues),
             contentPadding = PaddingValues(bottom = 24.dp)
         ) {
-            // Improved Header
+            // Improved Header with IIIT Una Logo
             item {
                 Column(
                     modifier = Modifier
@@ -75,20 +78,35 @@ fun PremiumHomeScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.Top
                     ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                text = "Hello,",
-                                style = MaterialTheme.typography.titleMedium,
-                                color = Color.White.copy(alpha = 0.85f),
-                                fontWeight = FontWeight.Medium
+                        // IIIT Una Logo and Greeting
+                        Row(
+                            modifier = Modifier.weight(1f),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // IIIT Una Logo
+                            Image(
+                                painter = painterResource(id = R.drawable.iiitulogo),
+                                contentDescription = "IIIT Una Logo",
+                                modifier = Modifier.size(48.dp)
                             )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = studentName,
-                                style = MaterialTheme.typography.headlineMedium,
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold
-                            )
+                            
+                            Spacer(modifier = Modifier.width(12.dp))
+                            
+                            Column {
+                                Text(
+                                    text = "Hello,",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = Color.White.copy(alpha = 0.85f),
+                                    fontWeight = FontWeight.Medium
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = studentName,
+                                    style = MaterialTheme.typography.headlineMedium,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
                         }
 
                         // Profile Button
@@ -112,6 +130,15 @@ fun PremiumHomeScreen(
                             }
                         }
                     }
+                    
+                    // IIIT Una Subtitle
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Text(
+                        text = "IIIT Una",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = IIITUGold,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
 
