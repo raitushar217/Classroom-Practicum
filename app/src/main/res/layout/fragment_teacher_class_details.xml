@@ -3,82 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="?android:attr/colorBackground"
         tools:context=".teacherapp.TeacherMainActivity">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar2"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@color/slightgrey"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorSurface"
+            app:elevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/ClassNameID"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center|start"
-
-                android:padding="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
                 android:text="Class Name"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:fontFamily="@font/barlow_extrabold"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="10dp">
-
-            </TextView>
-        </androidx.appcompat.widget.Toolbar>
-
-        <View
-            android:id="@+id/view5"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/lcr"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar2">
-
-        </View>
-
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="20sp" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <TextView
             android:id="@+id/textView56"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/lcr"
+            android:layout_marginTop="24dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:padding="2dp"
-            android:text="Take Complete Control of your classes"
-            android:textColor="@color/maybecyant"
+            android:text="Manage your class resources"
+            android:textColor="?attr/colorPrimary"
             android:textSize="16sp"
-            app:fontFamily="@font/mazzardextrabold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view5" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
         <TextView
             android:id="@+id/textView58"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:padding="3dp"
-            android:text="Mrs Veena Khandelwal"
-            android:textColor="@color/black"
-            android:textSize="24sp"
-            app:fontFamily="@font/barlow_extrabold"
+            android:text="Class Dashboard"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="28sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView56" />
@@ -86,224 +61,193 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="8dp"
+            android:layout_margin="16dp"
             android:columnCount="2"
             android:rowCount="2"
-            app:layout_constraintTop_toBottomOf="@+id/textView58"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView58">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardViewA"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="@color/brightgreen"
-            app:cardBackgroundColor="@color/ShadeofDark"
-            app:cardCornerRadius="24dp">
+            <!-- CardView A: Quiz Hub -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewA"
+                style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="?attr/colorSecondaryContainer"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView62"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Take me to"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:textColor="@color/yellow"
-                    android:textSize="13sp"
-                    app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="match_parent"
+                    android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/textView63"
+                    <ImageView
+                        android:id="@+id/imageView37"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintBottom_toTopOf="@+id/textView63"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:srcCompat="@drawable/quiz_new_icon" />
+
+                    <TextView
+                        android:id="@+id/textView63"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:text="Quiz Hub"
+                        android:textColor="?attr/colorOnSecondaryContainer"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView37" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- CardView B: Resource Hub -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewB"
+                style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="?attr/colorTertiaryContainer"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:text="Quiz Hub"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:textColor="@color/yellow"
-                    android:textSize="20sp"
-                    app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintTop_toBottomOf="@+id/textView62" />
+                    android:layout_height="match_parent"
+                    android:padding="16dp">
 
-                <ImageView
-                    android:id="@+id/imageView37"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textView63"
-                    app:srcCompat="@drawable/quiz_new_icon" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <ImageView
+                        android:id="@+id/imageView39"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintBottom_toTopOf="@+id/textView65"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:srcCompat="@drawable/doinghomework" />
 
-        <!-- CardView B -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardViewB"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            app:cardBackgroundColor="@color/mixred"
-            app:cardCornerRadius="24dp"
-            app:strokeColor="@color/BalticSeabgcolor"
-            app:strokeWidth="1dp">
+                    <TextView
+                        android:id="@+id/textView65"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:text="Resource Hub"
+                        android:textColor="?attr/colorOnTertiaryContainer"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView39" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <!-- CardView C: Assignment Hub -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewC"
+                style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="?attr/colorErrorContainer"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp">
 
-                <TextView
-                    android:id="@+id/textView66"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:text="Take me to"
-                    android:textColor="@color/yellow"
-                    android:textSize="13sp"
-                    app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="match_parent"
+                    android:padding="16dp">
 
-                <TextView
-                    android:id="@+id/textView65"
+                    <ImageView
+                        android:id="@+id/imageView36"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintBottom_toTopOf="@+id/textView61"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:srcCompat="@drawable/books" />
+
+                    <TextView
+                        android:id="@+id/textView61"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:text="Assignment Hub"
+                        android:textColor="?attr/colorOnErrorContainer"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView36" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- CardView D: Announcements -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewD"
+                style="?attr/materialCardViewElevatedStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"
+                app:cardBackgroundColor="?attr/colorPrimaryContainer"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="2dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:text="Resource Hub"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintTop_toBottomOf="@+id/textView66" />
+                    android:layout_height="match_parent"
+                    android:padding="16dp">
 
-                <ImageView
-                    android:id="@+id/imageView39"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="3dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView65"
-                    app:srcCompat="@drawable/doinghomework" />
+                    <ImageView
+                        android:id="@+id/imageView38"
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintBottom_toTopOf="@+id/textView64"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:srcCompat="@drawable/register" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- CardView C -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardViewC"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="@color/BalticSeabgcolor"
-            app:cardCornerRadius="24dp"
-            app:cardBackgroundColor="@color/maybecyant">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView60"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:text="Take me to the"
-                    android:textColor="@color/greenishbg"
-                    android:textSize="13sp"
-                    app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/textView61"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:text="Assignment Hub"
-                    android:textColor="@color/mixred"
-                    android:textSize="24sp"
-                    app:fontFamily="@font/barlow_extrabold"
-                    app:layout_constraintTop_toBottomOf="@+id/textView60" />
-                
-                <ImageView
-                    android:id="@+id/imageView36"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView61"
-                    app:srcCompat="@drawable/books" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- CardView D -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardViewD"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="8dp"
-            app:cardBackgroundColor="@color/ShadeofDark"
-            app:strokeWidth="1dp"
-            app:strokeColor="@color/ShadeofDark"
-            app:cardCornerRadius="24dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView64"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:text="Make Class Announcements"
-                    android:textColor="@color/yellow"
-                    android:textSize="20sp"
-                    app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView38"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView64"
-                    app:srcCompat="@drawable/register" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/textView64"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:gravity="center"
+                        android:text="Announcements"
+                        android:textColor="?attr/colorOnPrimaryContainer"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView38" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </GridLayout>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
