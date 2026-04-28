@@ -154,8 +154,8 @@ class FirebaseViewmodel @Inject constructor(application: Application):AndroidVie
 
         if(hasInternetConnection()){
 
-            var announcement=database.child("Announcements").child(classid).child(subjectID)
-            announcement.setValue(announcement)
+            var announcementRef=database.child("Announcements").child(classid).child(subjectID).push()
+            announcementRef.setValue(announcement)
                 .addOnSuccessListener {
                     Toast.makeText(getApplication(),"Announcement Successfully added",Toast.LENGTH_LONG).show()
                     layout.findNavController().navigate(R.id.action_teacherPostFragment_to_teacherAnnouncementsFragment)

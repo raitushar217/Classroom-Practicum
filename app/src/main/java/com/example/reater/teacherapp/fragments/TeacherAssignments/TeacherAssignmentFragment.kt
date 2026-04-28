@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.navigation.fragment.findNavController
 import com.example.reater.R
 import com.example.reater.adapters.AssignmentAdapter
 import com.example.reater.adapters.TeacherHomeClassAdapter
@@ -38,10 +39,16 @@ class TeacherAssignmentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       _binding=FragmentTeacherAssignmentBinding.inflate(layoutInflater,container,false)
+        _binding=FragmentTeacherAssignmentBinding.inflate(layoutInflater,container,false)
         binding.teacherRV.adapter=mAdapter
         binding.teacherRV.layoutManager=LinearLayoutManager(requireContext())
         setupScreen()
+        
+        binding.floatingActionButton.setOnClickListener {
+            // Navigate to assignment upload fragment
+            findNavController().navigate(R.id.action_teacherAssignmentFragment_to_assignmentUploadFragment)
+        }
+        
         return binding.root
     }
 
