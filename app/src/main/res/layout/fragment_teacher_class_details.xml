@@ -83,21 +83,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView56" />
 
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:columnCount="2"
+            android:rowCount="2"
+            app:layout_constraintTop_toBottomOf="@+id/textView58"
+            app:layout_constraintBottom_toBottomOf="parent">
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardViewA"
-            android:layout_width="190dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
             app:strokeWidth="1dp"
             app:strokeColor="@color/brightgreen"
             app:cardBackgroundColor="@color/ShadeofDark"
-
-            android:layout_height="220dp"
-            android:layout_marginStart="8dp"
-            app:cardCornerRadius="15dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView58">
-
-            <!-- Add your image and text inside this CardView -->
+            app:cardCornerRadius="24dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -105,7 +110,7 @@
 
                 <TextView
                     android:id="@+id/textView62"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Take me to"
                     android:gravity="center"
@@ -113,13 +118,11 @@
                     android:textColor="@color/yellow"
                     android:textSize="13sp"
                     app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/textView63"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Quiz Hub"
@@ -128,8 +131,6 @@
                     android:textColor="@color/yellow"
                     android:textSize="20sp"
                     app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView62" />
 
                 <ImageView
@@ -149,25 +150,34 @@
             android:id="@+id/cardViewB"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
             app:cardBackgroundColor="@color/mixred"
-            app:cardCornerRadius="15dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardViewA"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardViewA"
-            app:layout_constraintTop_toTopOf="@+id/cardViewA"
+            app:cardCornerRadius="24dp"
             app:strokeColor="@color/BalticSeabgcolor"
             app:strokeWidth="1dp">
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/textView66"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:padding="3dp"
+                    android:text="Take me to"
+                    android:textColor="@color/yellow"
+                    android:textSize="13sp"
+                    app:fontFamily="@font/mazzardextrabold"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
                     android:id="@+id/textView65"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
@@ -176,8 +186,6 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView66" />
 
                 <ImageView
@@ -191,35 +199,21 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView65"
                     app:srcCompat="@drawable/doinghomework" />
 
-                <TextView
-                    android:id="@+id/textView66"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:text="Take me to "
-                    android:textColor="@color/yellow"
-                    android:textSize="13sp"
-                    app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- CardView C -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardViewC"
-            android:layout_width="190dp"
-            android:layout_height="240dp"
-            android:layout_marginStart="8dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
             app:strokeWidth="1dp"
             app:strokeColor="@color/BalticSeabgcolor"
-            app:cardCornerRadius="15dp"
-            app:cardBackgroundColor="@color/maybecyant"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardViewA">
+            app:cardCornerRadius="24dp"
+            app:cardBackgroundColor="@color/maybecyant">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -227,7 +221,7 @@
 
                 <TextView
                     android:id="@+id/textView60"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:gravity="center"
@@ -236,25 +230,11 @@
                     android:textColor="@color/greenishbg"
                     android:textSize="13sp"
                     app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/imageView36"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView61"
-                    app:srcCompat="@drawable/books" />
 
                 <TextView
                     android:id="@+id/textView61"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:padding="3dp"
@@ -262,9 +242,19 @@
                     android:textColor="@color/mixred"
                     android:textSize="24sp"
                     app:fontFamily="@font/barlow_extrabold"
+                    app:layout_constraintTop_toBottomOf="@+id/textView60" />
+                
+                <ImageView
+                    android:id="@+id/imageView36"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView60" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView61"
+                    app:srcCompat="@drawable/books" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -273,19 +263,13 @@
             android:id="@+id/cardViewD"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
             app:cardBackgroundColor="@color/ShadeofDark"
             app:strokeWidth="1dp"
             app:strokeColor="@color/ShadeofDark"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            app:cardCornerRadius="15dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardViewC"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardViewC"
-            app:layout_constraintTop_toBottomOf="@+id/cardViewB">
-
-            <!-- Add your image and text inside this CardView -->
+            app:cardCornerRadius="24dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -293,7 +277,7 @@
 
                 <TextView
                     android:id="@+id/textView64"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:gravity="center"
@@ -302,8 +286,6 @@
                     android:textColor="@color/yellow"
                     android:textSize="20sp"
                     app:fontFamily="@font/mazzardextrabold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
@@ -318,6 +300,8 @@
                     app:srcCompat="@drawable/register" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        </GridLayout>
 
 
 

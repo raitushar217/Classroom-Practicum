@@ -176,7 +176,7 @@ class FirebaseViewmodel @Inject constructor(application: Application):AndroidVie
     var classlistResponse:MutableLiveData<NetworkResult<List<Coursework>>> = MutableLiveData()
 
     fun fetchTeacherClasses(teacherID: String) {
-
+        classlistResponse.value = NetworkResult.Loading()
         val databaseReference = database.child("Coursework").child(teacherID)
 
         databaseReference.addValueEventListener(object : ValueEventListener {

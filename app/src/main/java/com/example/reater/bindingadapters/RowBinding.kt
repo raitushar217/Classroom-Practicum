@@ -82,11 +82,13 @@ fun onAssignmentClickListener(assignmentRowLayout: ConstraintLayout, assignment:
 
 
 @BindingAdapter("onTeacherClassClickListener")
-fun onTeacherClassClickListener(teacherClassRowLayout: ConstraintLayout, coursework: Coursework){
+fun onTeacherClassClickListener(teacherClassRowLayout: ConstraintLayout, coursework: Coursework?){
     teacherClassRowLayout.setOnClickListener{
         try {
-            val action= TeacherHomeFragmentDirections.actionTeacherHomeFragmentToTeacherClassDetailsFragment(coursework)
-            teacherClassRowLayout.findNavController().navigate(action)
+            if (coursework != null) {
+                val action = TeacherHomeFragmentDirections.actionTeacherHomeFragmentToTeacherClassDetailsFragment(coursework)
+                teacherClassRowLayout.findNavController().navigate(action)
+            }
         } catch (e:Exception){
             Log.d("onRecipeClickListener",e.toString())
         }

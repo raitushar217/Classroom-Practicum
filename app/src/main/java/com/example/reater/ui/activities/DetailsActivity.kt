@@ -14,7 +14,9 @@ import com.example.reater.ui.compose.screens.PremiumCourseDetailsScreen
 import com.example.reater.ui.compose.theme.ReaterTheme
 import com.example.reater.utils.NetworkResult
 import com.example.reater.viewmodels.FirebaseViewmodel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
     private val args: DetailsActivityArgs by navArgs()
     private lateinit var firebaseViewmodel: FirebaseViewmodel

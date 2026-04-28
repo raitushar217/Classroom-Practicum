@@ -25,6 +25,11 @@ class TeacherClassDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding= FragmentTeacherClassDetailsBinding.inflate(inflater, container,false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         var nav=findNavController()
         binding.cardViewA.setOnClickListener {
             nav.navigate(R.id.action_teacherClassDetailsFragment_to_teacherQuizFragment)
@@ -36,10 +41,8 @@ class TeacherClassDetailsFragment : Fragment() {
             nav.navigate(R.id.action_teacherClassDetailsFragment_to_teacherAssignmentFragment)
         }
         binding.cardViewD.setOnClickListener {
-            nav.navigate(R.id.action_teacherPostFragment_to_teacherAnnouncementsFragment)
+            nav.navigate(R.id.action_teacherClassDetailsFragment_to_teacherAnnouncementsFragment)
         }
-
-        return binding.root
     }
 
 

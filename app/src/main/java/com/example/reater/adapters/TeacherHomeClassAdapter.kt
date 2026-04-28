@@ -16,7 +16,7 @@ class TeacherHomeClassAdapter: RecyclerView.Adapter<TeacherHomeClassAdapter.MyVi
         RecyclerView.ViewHolder(binding.root) {
         fun bind(course: Coursework) {
             binding.classdetails=course
-
+            binding.executePendingBindings()
         }
 
         companion object {

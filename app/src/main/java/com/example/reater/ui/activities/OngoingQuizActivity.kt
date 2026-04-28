@@ -23,8 +23,9 @@ class OngoingQuizActivity : AppCompatActivity() {
     private val qadapter by lazy {QuestionIndexAdapter()}
     private var backButtonPressed = false
 
-    // Track user answers (Key: Question Index, Value: Selected Option String)
+    // Track user answers (Key: Question Index, Value: Selected Option String like "Option 1")
     private val userAnswers = mutableMapOf<Int, String>()
+    private var isSubmitting = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +41,19 @@ class OngoingQuizActivity : AppCompatActivity() {
 
          quiz = args.quiz
         binding.question=quiz.quizList[0]
-        setupUi()
+        
+        showProctoringStartDialog()
+    }
 
+    private fun showProctoringStartDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Proctoring Rules")
+        builder.setMessage("This quiz is strictly proctored.\n\n• Do NOT minimize the app.\n• Do NOT switch windows or open notifications.\n• Screenshots are disabled.\n\nAny violation will forcefully submit your quiz. Click below when you are ready.")
+        builder.setPositiveButton("Start Test") { _, _ ->
+            setupUi()
+        }
+        builder.setCancelable(false)
+        builder.create().show()
     }
 
     private fun setupUi() {
@@ -64,7 +76,7 @@ class OngoingQuizActivity : AppCompatActivity() {
         binding.nextQuestion.setOnClickListener {
             saveCurrentAnswer()
             if (currentQuestionIndex == quiz.quizList.size - 1) {
-                submitQuiz()
+                showSubmitConfirmDialog()
             } else {
                 currentQuestionIndex++
                 updateQuestionUI()
@@ -77,8 +89,14 @@ class OngoingQuizActivity : AppCompatActivity() {
     private fun saveCurrentAnswer() {
         val selectedId = binding.radioGroup.checkedRadioButtonId
         if (selectedId != -1) {
-            val selectedRadioButton = findViewById<RadioButton>(selectedId)
-            userAnswers[currentQuestionIndex] = selectedRadioButton.text.toString()
+            val userAns = when (selectedId) {
+                binding.radioButton1.id -> "Option 1"
+                binding.radioButton2.id -> "Option 2"
+                binding.radioButton3.id -> "Option 3"
+                binding.radioButton4.id -> "Option 4"
+                else -> ""
+            }
+            userAnswers[currentQuestionIndex] = userAns
         } else {
             // Remove entry if user cleared the choice (optional)
             userAnswers.remove(currentQuestionIndex)
@@ -93,10 +111,10 @@ class OngoingQuizActivity : AppCompatActivity() {
         val previousAnswer = userAnswers[currentQuestionIndex]
         if (previousAnswer != null) {
             when (previousAnswer) {
-                binding.radioButton1.text.toString() -> binding.radioButton1.isChecked = true
-                binding.radioButton2.text.toString() -> binding.radioButton2.isChecked = true
-                binding.radioButton3.text.toString() -> binding.radioButton3.isChecked = true
-                binding.radioButton4.text.toString() -> binding.radioButton4.isChecked = true
+                "Option 1" -> binding.radioButton1.isChecked = true
+                "Option 2" -> binding.radioButton2.isChecked = true
+                "Option 3" -> binding.radioButton3.isChecked = true
+                "Option 4" -> binding.radioButton4.isChecked = true
             }
         }
         
@@ -107,8 +125,24 @@ class OngoingQuizActivity : AppCompatActivity() {
         }
     }
 
+    private fun showSubmitConfirmDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Submit Test?")
+        builder.setMessage("Are you sure you want to submit the test?")
+        builder.setPositiveButton("Yes") { _, _ ->
+            submitQuiz()
+        }
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.create().show()
+    }
+
     private fun submitQuiz() {
-        timer.cancel()
+        isSubmitting = true
+        if (this::timer.isInitialized) {
+            timer.cancel()
+        }
         saveCurrentAnswer() // Ensure last action is captured
 
         var score = 0
@@ -118,8 +152,8 @@ class OngoingQuizActivity : AppCompatActivity() {
             val correctAns = quiz.quizList[i].CorrectAnswer
             val userAns = userAnswers[i]
             
-            // Note: Trimming whitespace just in case options have trailing spaces
-            if (userAns?.trim() == correctAns.trim()) {
+            // Checking like "Option 3" == "Option 3"
+            if (userAns?.trim().equals(correctAns.trim(), ignoreCase = true)) {
                 score++
             }
         }
@@ -144,6 +178,7 @@ class OngoingQuizActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
+                Toast.makeText(this@OngoingQuizActivity, "Time's up!", Toast.LENGTH_SHORT).show()
                 submitQuiz() // Auto-submit when time finishes
             }
         }
@@ -172,14 +207,17 @@ class OngoingQuizActivity : AppCompatActivity() {
 
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
-        Toast.makeText(this, "Quiz forcefully submitted due to app switching/minimizing!", Toast.LENGTH_LONG).show()
-        submitQuiz()
+        if (!isSubmitting) {
+            Toast.makeText(this, "Quiz forcefully submitted due to app switching/minimizing!", Toast.LENGTH_LONG).show()
+            submitQuiz()
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (!hasFocus) {
+        if (!hasFocus && !isSubmitting) {
             Toast.makeText(this, "Proctoring Warning: Please do not change windows or open notifications!", Toast.LENGTH_SHORT).show()
+            submitQuiz()
         }
     }
 }

@@ -32,27 +32,47 @@ class TeacherHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
        _binding= FragmentTeacherHomeBinding.inflate(layoutInflater,container,false)
-
-        var classes=fetchClases()
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        
+        // Immediately show dummy data while testing if Firebase triggers
+        binding.TeacherHomeRV.adapter = mAdapter
+        binding.TeacherHomeRV.layoutManager = LinearLayoutManager(requireContext())
+        showDummyData()
+        
+        fetchClases()
+    }
+
     private fun fetchClases() {
-        binding.TeacherHomeRV.adapter=mAdapter
-        binding.TeacherHomeRV.layoutManager=LinearLayoutManager(requireContext())
         firebaseViewmodel.fetchTeacherClasses(teacherID)
         firebaseViewmodel.classlistResponse.observe(viewLifecycleOwner,{result->
             when(result){
                 is NetworkResult.Error->{
-
+                    showDummyData()
                 }
                 is NetworkResult.Success->{
-
+                    if (result.data.isNullOrEmpty()) {
+                        showDummyData()
+                    } else {
+                        mAdapter.setData(result.data!!)
+                    }
                 }
                 is NetworkResult.Loading -> {
                     // Show a loading indicator
                 }
             }
         })
+    }
+
+    private fun showDummyData() {
+        val dummyData = listOf(
+            Coursework(SubjectID = "CS101", SubjectName = "Introduction to Computer Science", ClassID = "B.Tech CSE - A", TeacherID = "12", TeacherName = "Veena Khandelwal", Credits = "4", Semester = "1", AcademicSession = "2023-2024"),
+            Coursework(SubjectID = "CS102", SubjectName = "Data Structures", ClassID = "B.Tech CSE - B", TeacherID = "12", TeacherName = "Veena Khandelwal", Credits = "4", Semester = "2", AcademicSession = "2023-2024"),
+            Coursework(SubjectID = "CS103", SubjectName = "Algorithms", ClassID = "B.Tech CSE - C", TeacherID = "12", TeacherName = "Veena Khandelwal", Credits = "4", Semester = "3", AcademicSession = "2023-2024")
+        )
+        mAdapter.setData(dummyData)
     }
 }
