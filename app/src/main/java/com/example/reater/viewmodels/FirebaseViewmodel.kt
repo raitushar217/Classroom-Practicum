@@ -93,7 +93,7 @@ class FirebaseViewmodel @Inject constructor(application: Application):AndroidVie
                     storageRef.putFile(fileUri)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                var addsm=database.child("StudyMaterial/$classid/$subjectID")
+                                var addsm = database.child("StudyMaterial/$classid/$subjectID").push()
                                 addsm.setValue(studyMaterial).
                                         addOnSuccessListener {
                                             Log.d("UserRepository", "User added successfully")
