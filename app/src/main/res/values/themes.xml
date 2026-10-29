@@ -2,28 +2,29 @@
     <!-- Base application theme. -->
     <style name="Theme.Reater" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Brand colors -->
-        <item name="colorPrimary">@color/iiitu_navy</item>
-        <item name="colorOnPrimary">@color/iiitu_white</item>
-        <item name="colorPrimaryContainer">@color/iiitu_navy_light</item>
-        <item name="colorOnPrimaryContainer">@color/iiitu_white</item>
-        <item name="colorSecondary">@color/iiitu_accent</item>
-        <item name="colorOnSecondary">@color/iiitu_white</item>
-        <item name="colorSecondaryContainer">@color/iiitu_navy_dark</item>
-        <item name="colorOnSecondaryContainer">@color/iiitu_white</item>
-        <item name="colorTertiary">@color/iiitu_gold</item>
-        <item name="colorOnTertiary">@color/iiitu_navy_dark</item>
-        <item name="colorTertiaryContainer">@color/iiitu_gold_light</item>
-        <item name="colorOnTertiaryContainer">@color/iiitu_navy</item>
+        <item name="colorPrimary">@color/academic_indigo</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/academic_indigo_bg</item>
+        <item name="colorOnPrimaryContainer">@color/academic_indigo</item>
+        <item name="colorSecondary">@color/academic_emerald</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/academic_emerald_bg</item>
+        <item name="colorOnSecondaryContainer">@color/academic_emerald</item>
+        <item name="colorTertiary">@color/academic_amber</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorTertiaryContainer">@color/academic_amber_bg</item>
+        <item name="colorOnTertiaryContainer">@color/academic_amber</item>
         <item name="colorError">@color/colorError</item>
         <item name="colorOnError">@color/colorOnError</item>
-        <item name="colorSurface">@color/iiitu_white</item>
-        <item name="colorOnSurface">@color/premium_text_primary</item>
-        <item name="colorSurfaceVariant">@color/iiitu_light_bg</item>
-        <item name="colorOnSurfaceVariant">@color/premium_text_secondary</item>
+        <item name="colorSurface">@color/academic_card</item>
+        <item name="colorOnSurface">@color/academic_text_primary</item>
+        <item name="colorSurfaceVariant">@color/academic_stroke_light</item>
+        <item name="colorOnSurfaceVariant">@color/academic_text_secondary</item>
 
         <!-- App surfaces -->
-        <item name="android:colorBackground">@color/iiitu_light_bg</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@color/iiitu_navy</item>
+        <item name="android:colorBackground">@color/academic_canvas</item>
+        <item name="android:statusBarColor" tools:targetApi="m">@color/academic_canvas</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
 
         <!-- Default typography -->
         <item name="android:fontFamily">sans-serif</item>

@@ -2,6 +2,7 @@ package com.example.reater.di
 
 import com.example.reater.data.network.KojoStudentApi
 import com.example.reater.data.network.UserApi
+import com.example.reater.data.network.AuthInterceptor
 import com.example.reater.utils.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -19,8 +20,9 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideHttpClient() : OkHttpClient {
+    fun provideHttpClient(authInterceptor: AuthInterceptor) : OkHttpClient {
         return OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
             .build()
@@ -52,10 +54,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideTeacherApi(retrofit: Retrofit): com.example.reater.data.network.KojoTeacherApi {
+        return retrofit.create(com.example.reater.data.network.KojoTeacherApi::class.java)
+    }
+
+    @Singleton
+    @Provides
     fun providesUserApi(retrofit: Retrofit): UserApi{
         return retrofit.create(UserApi::class.java)
     }
-
-
-
 }

@@ -6,248 +6,568 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:attr/colorBackground"
+        android:background="@color/academic_canvas"
         tools:context=".teacherapp.TeacherMainActivity">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar2"
+        <!-- Top App Bar -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/toolbarCard"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorSurface"
-            app:elevation="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="60dp"
+            app:cardBackgroundColor="@color/academic_card"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="1dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/academic_stroke"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/ClassNameID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="Class Name"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="20sp" />
-        </com.google.android.material.appbar.MaterialToolbar>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="16dp">
 
-        <TextView
-            android:id="@+id/textView56"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:text="Manage your class resources"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+                <ImageView
+                    android:id="@+id/btnBack"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:padding="6dp"
+                    android:src="@drawable/baseline_arrow_back_24"
+                    app:tint="@color/academic_text_primary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView58"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:text="Class Dashboard"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView56" />
+                <TextView
+                    android:id="@+id/ClassNameID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif-medium"
+                    android:maxLines="1"
+                    android:text="Mathematics"
+                    android:textColor="@color/academic_text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/chipFacultyBadge"
+                    app:layout_constraintStart_toEndOf="@+id/btnBack"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <GridLayout
+                <!-- Faculty Pill Badge -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/chipFacultyBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    app:cardBackgroundColor="@color/academic_indigo_bg"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingHorizontal="10dp"
+                        android:text="Faculty"
+                        android:textColor="@color/academic_indigo"
+                        android:textSize="11sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:textStyle="bold" />
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="16dp"
-            android:columnCount="2"
-            android:rowCount="2"
+            android:clipToPadding="false"
+            android:fillViewport="true"
+            android:paddingBottom="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView58">
+            app:layout_constraintTop_toBottomOf="@+id/toolbarCard">
 
-            <!-- CardView A: Quiz Hub -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardViewA"
-                style="?attr/materialCardViewElevatedStyle"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                app:cardBackgroundColor="?attr/colorSecondaryContainer"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="2dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="16dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <!-- Header Title Section -->
+                <TextView
+                    android:id="@+id/textView56"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.08"
+                    android:text="CLASS DASHBOARD"
+                    android:textColor="@color/academic_text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView58"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="sans-serif"
+                    android:text="Resource &amp; Academic Hub"
+                    android:textColor="@color/academic_text_primary"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="sans-serif"
+                    android:text="Manage quizzes, study materials, announcements, and track progress."
+                    android:textColor="@color/academic_text_secondary"
+                    android:textSize="13sp" />
+
+                <!-- 2x2 Clean Modern Hub Tiles -->
+                <GridLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="16dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:columnCount="2"
+                    android:rowCount="2">
 
-                    <ImageView
-                        android:id="@+id/imageView37"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintBottom_toTopOf="@+id/textView63"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_chainStyle="packed"
-                        app:srcCompat="@drawable/quiz_new_icon" />
+                    <!-- CardView A: Quiz Hub -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewA"
+                        style="?attr/materialCardViewElevatedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/academic_card"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="2dp"
+                        app:strokeColor="@color/academic_stroke"
+                        app:strokeWidth="1dp">
 
-                    <TextView
-                        android:id="@+id/textView63"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <FrameLayout
+                                android:layout_width="52dp"
+                                android:layout_height="52dp"
+                                android:background="@drawable/circle_white_bg"
+                                android:backgroundTint="@color/academic_indigo_bg">
+
+                                <ImageView
+                                    android:id="@+id/imageView37"
+                                    android:layout_width="28dp"
+                                    android:layout_height="28dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/quiz_new_icon" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:id="@+id/textView63"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Quiz Hub"
+                                android:textColor="@color/academic_text_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:fontFamily="sans-serif"
+                                android:text="Tests &amp; Question Bank"
+                                android:textColor="@color/academic_text_secondary"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- CardView B: Resource Hub -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewB"
+                        style="?attr/materialCardViewElevatedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/academic_card"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="2dp"
+                        app:strokeColor="@color/academic_stroke"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <FrameLayout
+                                android:layout_width="52dp"
+                                android:layout_height="52dp"
+                                android:background="@drawable/circle_white_bg"
+                                android:backgroundTint="@color/academic_emerald_bg">
+
+                                <ImageView
+                                    android:id="@+id/imageView35"
+                                    android:layout_width="26dp"
+                                    android:layout_height="26dp"
+                                    android:layout_gravity="center"
+                                    app:tint="@color/academic_emerald"
+                                    android:src="@drawable/ic_baseline_insert_drive_file_24" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:id="@+id/textView61"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Resource Hub"
+                                android:textColor="@color/academic_text_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:fontFamily="sans-serif"
+                                android:text="Notes &amp; Materials"
+                                android:textColor="@color/academic_text_secondary"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- CardView C: Assignment Hub -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewC"
+                        style="?attr/materialCardViewElevatedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/academic_card"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="2dp"
+                        app:strokeColor="@color/academic_stroke"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <FrameLayout
+                                android:layout_width="52dp"
+                                android:layout_height="52dp"
+                                android:background="@drawable/circle_white_bg"
+                                android:backgroundTint="@color/academic_violet_bg">
+
+                                <ImageView
+                                    android:id="@+id/imageView36"
+                                    android:layout_width="26dp"
+                                    android:layout_height="26dp"
+                                    android:layout_gravity="center"
+                                    app:tint="@color/academic_violet"
+                                    android:src="@drawable/ic_baseline_insert_drive_file_24" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:id="@+id/textView62"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Assignment Hub"
+                                android:textColor="@color/academic_text_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:fontFamily="sans-serif"
+                                android:text="Submissions &amp; Review"
+                                android:textColor="@color/academic_text_secondary"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- CardView D: Announcements -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardViewD"
+                        style="?attr/materialCardViewElevatedStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_rowWeight="1"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="6dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/academic_card"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="2dp"
+                        app:strokeColor="@color/academic_stroke"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="14dp">
+
+                            <FrameLayout
+                                android:layout_width="52dp"
+                                android:layout_height="52dp"
+                                android:background="@drawable/circle_white_bg"
+                                android:backgroundTint="@color/academic_amber_bg">
+
+                                <ImageView
+                                    android:id="@+id/imageView38"
+                                    android:layout_width="26dp"
+                                    android:layout_height="26dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/register" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:id="@+id/textView64"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:text="Announcements"
+                                android:textColor="@color/academic_text_primary"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="1dp"
+                                android:fontFamily="sans-serif"
+                                android:text="Notices &amp; Circulars"
+                                android:textColor="@color/academic_text_secondary"
+                                android:textSize="11sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </GridLayout>
+
+                <!-- Section Divider / Header -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.08"
+                    android:text="EVALUATION &amp; ROSTER"
+                    android:textColor="@color/academic_text_secondary"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <!-- CardView Attendance: Lecture Attendance & Roll Call -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewAttendance"
+                    style="?attr/materialCardViewElevatedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/academic_card"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="#A7F3D0"
+                    app:strokeWidth="1.2dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:text="Quiz Hub"
-                        android:textColor="?attr/colorOnSecondaryContainer"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView37" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:padding="16dp">
 
-            <!-- CardView B: Resource Hub -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardViewB"
-                style="?attr/materialCardViewElevatedStyle"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                app:cardBackgroundColor="?attr/colorTertiaryContainer"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="2dp">
+                        <FrameLayout
+                            android:id="@+id/boxAttendanceIcon"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_white_bg"
+                            android:backgroundTint="@color/academic_emerald_bg"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                            <ImageView
+                                android:id="@+id/imageViewAttendance"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/register" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/textViewAttendanceTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_marginEnd="8dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Lecture Attendance &amp; Roll Call"
+                            android:textColor="@color/academic_text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/ivChevronAtt"
+                            app:layout_constraintStart_toEndOf="@+id/boxAttendanceIcon"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewAttendanceSubtitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginEnd="8dp"
+                            android:fontFamily="sans-serif"
+                            android:text="Take roll call, track shortage warnings &amp; sync live"
+                            android:textColor="@color/academic_text_secondary"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/ivChevronAtt"
+                            app:layout_constraintStart_toEndOf="@+id/boxAttendanceIcon"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewAttendanceTitle" />
+
+                        <ImageView
+                            android:id="@+id/ivChevronAtt"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/baseline_arrow_back_24"
+                            android:rotation="180"
+                            app:tint="@color/academic_emerald"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- CardView E: Grade Cards & Student Marks -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewE"
+                    style="?attr/materialCardViewElevatedStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="16dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="6dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/academic_card"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="#C7D2FE"
+                    app:strokeWidth="1.2dp">
 
-                    <ImageView
-                        android:id="@+id/imageView39"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintBottom_toTopOf="@+id/textView65"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_chainStyle="packed"
-                        app:srcCompat="@drawable/doinghomework" />
-
-                    <TextView
-                        android:id="@+id/textView65"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:text="Resource Hub"
-                        android:textColor="?attr/colorOnTertiaryContainer"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView39" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:padding="16dp">
 
-            <!-- CardView C: Assignment Hub -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardViewC"
-                style="?attr/materialCardViewElevatedStyle"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                app:cardBackgroundColor="?attr/colorErrorContainer"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="2dp">
+                        <FrameLayout
+                            android:id="@+id/boxGradeIcon"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@drawable/circle_white_bg"
+                            android:backgroundTint="@color/academic_indigo_bg"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="16dp">
+                            <ImageView
+                                android:id="@+id/imageViewGrade"
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_trophy"
+                                app:tint="@color/academic_indigo" />
+                        </FrameLayout>
 
-                    <ImageView
-                        android:id="@+id/imageView36"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintBottom_toTopOf="@+id/textView61"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_chainStyle="packed"
-                        app:srcCompat="@drawable/books" />
+                        <TextView
+                            android:id="@+id/textViewGradeTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_marginEnd="8dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="Student Grade Cards &amp; Evaluation"
+                            android:textColor="@color/academic_text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@+id/ivChevronGrade"
+                            app:layout_constraintStart_toEndOf="@+id/boxGradeIcon"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/textView61"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:text="Assignment Hub"
-                        android:textColor="?attr/colorOnErrorContainer"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView36" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/textViewGradeSubtitle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginEnd="8dp"
+                            android:fontFamily="sans-serif"
+                            android:text="View and edit student assessment marks with real-time sync"
+                            android:textColor="@color/academic_text_secondary"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/ivChevronGrade"
+                            app:layout_constraintStart_toEndOf="@+id/boxGradeIcon"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewGradeTitle" />
 
-            <!-- CardView D: Announcements -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardViewD"
-                style="?attr/materialCardViewElevatedStyle"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_rowWeight="1"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"
-                app:cardBackgroundColor="?attr/colorPrimaryContainer"
-                app:cardCornerRadius="24dp"
-                app:cardElevation="2dp">
+                        <ImageView
+                            android:id="@+id/ivChevronGrade"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/baseline_arrow_back_24"
+                            android:rotation="180"
+                            app:tint="@color/academic_indigo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="16dp">
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                    <ImageView
-                        android:id="@+id/imageView38"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:scaleType="fitCenter"
-                        app:layout_constraintBottom_toTopOf="@+id/textView64"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_chainStyle="packed"
-                        app:srcCompat="@drawable/register" />
-
-                    <TextView
-                        android:id="@+id/textView64"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:fontFamily="sans-serif-medium"
-                        android:gravity="center"
-                        android:text="Announcements"
-                        android:textColor="?attr/colorOnPrimaryContainer"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView38" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-        </GridLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

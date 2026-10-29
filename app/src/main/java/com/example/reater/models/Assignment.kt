@@ -6,25 +6,36 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Assignment(
-    @SerializedName("assignmentid")
-    var assignmentid: String,
+    @SerializedName("id")
+    var assignmentid: String? = null,
 
-    @SerializedName("classid")
-    var classid: String,
+    @SerializedName("section_name")
+    var classid: String? = null,
 
-    @SerializedName("subjectID")
-    var subjectid: String,
+    @SerializedName("subject_name")
+    var subjectid: String? = null,
 
-    @SerializedName("DueDate")
-    var dueDate:String,
+    @SerializedName("due_date")
+    var dueDate: String? = null,
 
-    @SerializedName("Teacher")
-    var teacher: String,
+    @SerializedName("teacher_name")
+    var teacher: String? = null,
 
-    @SerializedName("instructions")
-    var instructions:String,
+    @SerializedName("description")
+    var instructions: String? = null,
 
-    @SerializedName("AssignmentName")
-    var assignmentName: String
+    @SerializedName("name")
+    var assignmentName: String? = null,
 
-    ):Parcelable
+    @SerializedName("assignment_pdf")
+    var assignmentPdf: String? = null,
+
+    @SerializedName("total_marks")
+    var totalMarks: Int? = null,
+
+    // Store the attached file name for local display
+    var fileName: String? = null,
+
+    // Store the URI string to open it later
+    var fileUri: String? = null
+): Parcelable

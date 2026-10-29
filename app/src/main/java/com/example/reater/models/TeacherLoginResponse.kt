@@ -3,20 +3,15 @@ package com.example.reater.models
 import com.google.gson.annotations.SerializedName
 
 data class TeacherLoginResponse(
-
-    @SerializedName("code")
-    var code: Int,
-
-
-    @SerializedName("teacher")
-    var Teacher: Student,
-
-    @SerializedName("Token")
+    @SerializedName("token")
     val token: String,
 
-    @SerializedName("id")
-    var id: String,
+    @SerializedName("user")
+    val user: UserDto,
+
+    @SerializedName("code")
+    var code: Int? = null,
 
     @SerializedName("message")
-    var message: String
+    var message: String? = null
 )

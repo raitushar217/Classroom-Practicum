@@ -39,8 +39,8 @@ fun PremiumQuizScreen(
             quizzes
         } else {
             quizzes.filter {
-                it.quizname.contains(searchQuery, ignoreCase = true) ||
-                        it.syllabus.contains(searchQuery, ignoreCase = true)
+                (it.quizname?.contains(searchQuery, ignoreCase = true) == true) ||
+                        (it.syllabus?.contains(searchQuery, ignoreCase = true) == true)
             }
         }
 

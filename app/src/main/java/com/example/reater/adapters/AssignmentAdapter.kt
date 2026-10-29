@@ -32,9 +32,16 @@ class AssignmentAdapter: RecyclerView.Adapter<AssignmentAdapter.MyViewHolder>() 
         return MyViewHolder.from(parent)
     }
 
+    var onItemClick: ((Assignment) -> Unit)? = null
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current_assignment = assignments[position]
         holder.bind(current_assignment)
+        if (onItemClick != null) {
+            holder.itemView.setOnClickListener {
+                onItemClick?.invoke(current_assignment)
+            }
+        }
     }
 
     override fun getItemCount(): Int {

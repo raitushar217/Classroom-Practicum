@@ -3,7 +3,9 @@ package com.example.reater.teacherapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.reater.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TeacherMainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -9,188 +9,244 @@
             type="com.example.reater.models.Quiz" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/title_holder"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="6dp"
-        android:background="@drawable/rounded_bottom_rectangle"
-        android:paddingBottom="8dp"
-        onQuizClickActivityListener="@{current_quiz}">
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/academic_card"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="1dp"
+        app:strokeColor="@color/academic_stroke"
+        app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout2"
-            android:layout_width="0dp"
-            android:layout_height="44dp"
-            android:background="@drawable/tcr"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:id="@+id/title_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            onQuizClickActivityListener="@{current_quiz}">
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="50dp"
+            <!-- Hidden compatibility views -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/quizicon" />
+                app:layout_constraintTop_toTopOf="parent">
 
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- Quiz Icon Badge -->
+            <FrameLayout
+                android:id="@+id/quiz_icon_badge"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/circle_white_bg"
+                android:backgroundTint="@color/badge_emerald_bg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    app:tint="@color/badge_emerald_tint"
+                    app:srcCompat="@drawable/ic_trophy" />
+            </FrameLayout>
+
+            <!-- Quiz Title & Subject ID -->
             <TextView
-                android:id="@+id/quiz_name"
+                android:id="@+id/textView15"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:gravity="start|center"
-                android:text="@{current_quiz.subjectId}"
-                android:textColor="@color/Cream"
-                android:textSize="16sp"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
                 android:fontFamily="sans-serif-medium"
+                android:maxLines="2"
+                android:text="@{current_quiz.quizname}"
+                android:textColor="@color/academic_text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/subject_code_card"
+                app:layout_constraintStart_toEndOf="@+id/quiz_icon_badge"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Mid-Term Assessment" />
+
+            <!-- Subject Code Badge -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/subject_code_card"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                app:cardBackgroundColor="@color/badge_emerald_bg"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/quiz_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingHorizontal="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{current_quiz.subjectId}"
+                    android:textColor="@color/badge_emerald_tint"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    tools:text="CS-401" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Metadata Row (Date, Duration, Questions) -->
+            <LinearLayout
+                android:id="@+id/meta_chips_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/quiz_icon_badge"
+                app:layout_constraintTop_toBottomOf="@+id/textView15">
+
+                <!-- Scheduled Date -->
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Date: "
+                    android:textColor="@color/academic_text_muted"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/date_scheduled_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{current_quiz.quizSchedule}"
+                    android:textColor="@color/academic_text_secondary"
+                    android:textSize="11sp"
+                    tools:text="Tomorrow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="6dp"
+                    android:text="•"
+                    android:textColor="@color/academic_text_muted"
+                    android:textSize="11sp" />
+
+                <!-- Duration -->
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Dur: "
+                    android:textColor="@color/academic_text_muted"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/textView31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{current_quiz.quizDuration}"
+                    android:textColor="@color/academic_text_secondary"
+                    android:textSize="11sp"
+                    tools:text="45m" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="6dp"
+                    android:text="•"
+                    android:textColor="@color/academic_text_muted"
+                    android:textSize="11sp" />
+
+                <!-- Questions -->
+                <TextView
+                    android:id="@+id/textView32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="Qs: "
+                    android:textColor="@color/academic_text_muted"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/question_count_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{String.valueOf(current_quiz.quizList.size())}"
+                    android:textColor="@color/academic_text_secondary"
+                    android:textSize="11sp"
+                    tools:text="20" />
+            </LinearLayout>
+
+            <!-- Syllabus Section (Card-in-card style) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/syllabus_container_card"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardBackgroundColor="@color/academic_stroke_light"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView4"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/meta_chips_layout">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp">
+
+                    <TextView
+                        android:id="@+id/textView35"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Syllabus"
+                        android:textColor="@color/academic_text_primary"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/syllabus_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif"
+                        android:maxLines="2"
+                        android:text="@{current_quiz.syllabus}"
+                        android:textColor="@color/academic_text_secondary"
+                        android:textSize="12sp"
+                        tools:text="Unit 1: Memory management, paging, segmentation, and virtual memory systems." />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/imageView9"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
-            app:srcCompat="@drawable/house" />
-
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="5dp"
-            android:text="@{current_quiz.quizname}"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="15sp"
-            android:fontFamily="sans-serif-medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView9"
-            app:layout_constraintTop_toTopOf="@+id/imageView9" />
-
-        <TextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
-            android:text="Scheduled on : "
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9" />
-
-        <TextView
-            android:id="@+id/date_scheduled_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-
-            android:text="@{current_quiz.quizSchedule}"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif-medium"
-            app:layout_constraintBottom_toBottomOf="@+id/textView17"
-            app:layout_constraintStart_toEndOf="@+id/textView17"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9"
-            app:layout_constraintVertical_bias="1.0" />
-
-        <TextView
-            android:id="@+id/textView29"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
-            android:text="Duration : "
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView17" />
-
-        <TextView
-            android:id="@+id/textView31"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="2dp"
-            android:text="@{current_quiz.quizDuration}"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif-medium"
-            app:layout_constraintBottom_toBottomOf="@+id/textView29"
-            app:layout_constraintStart_toEndOf="@+id/textView29"
-            app:layout_constraintTop_toTopOf="@+id/textView29" />
-
-        <TextView
-            android:id="@+id/textView32"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
-            android:text="Questions Count"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView29" />
-
-        <TextView
-            android:id="@+id/question_count_value"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="2dp"
-            android:text="@{String.valueOf(current_quiz.quizList.size())}"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif-medium"
-            app:layout_constraintBottom_toBottomOf="@+id/textView32"
-            app:layout_constraintStart_toEndOf="@+id/textView32"
-            app:layout_constraintTop_toTopOf="@+id/textView32"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/textView35"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
-            android:text="Syllabus"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-medium"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView32" />
-
-        <TextView
-            android:id="@+id/syllabus_value"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="10dp"
-            android:padding="5dp"
-            android:text="@{current_quiz.syllabus}"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView35" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

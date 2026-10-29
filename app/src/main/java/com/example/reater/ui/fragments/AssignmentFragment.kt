@@ -1,20 +1,21 @@
 package com.example.reater.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reater.adapters.AssignmentAdapter
 import com.example.reater.databinding.FragmentAssignmentBinding
-import com.example.reater.models.Assignment
+import com.example.reater.utils.NetworkResult
 import com.example.reater.viewmodels.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class AssignmentFragment : Fragment() {
-
 
     private var _binding: FragmentAssignmentBinding? = null
     private val binding get() = _binding!!
@@ -25,40 +26,72 @@ class AssignmentFragment : Fragment() {
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
     }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding= FragmentAssignmentBinding.inflate(inflater, container, false)
-        setupRecyclerView()
-        val assignments = listOf(
-            Assignment(
-                "1",
-                "IT-E",
-                "IT3126",
-                "25/05/2024",
-                "Devesh Choudhary",
-                "Late submissions will be not be entertained at any cost,so submit by the due date",
-                "Process Synocronisation"
-            )  ,
-            Assignment(
-                "202",
-                "IT-E",
-                "IT2126",
-                "25/07/2024",
-                "Veena Khandelwal",
-                "Late submissions will be not be entertained at any cost,so submit by the due date",
-                "Decision Tree Problems"
-            )
 
-        )
-        mAdapter.setData(assignments)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentAssignmentBinding.inflate(inflater, container, false)
+        setupRecyclerView()
+
+        binding.btnRegisterAssignment.setOnClickListener {
+            val bottomSheet = RegisterClassBottomSheet.newInstance {
+                mainViewModel.getStudentAssignments()
+            }
+            bottomSheet.show(childFragmentManager, RegisterClassBottomSheet.TAG)
+        }
+
+        observeViewModel()
+        mainViewModel.getStudentAssignments()
+
         return binding.root
     }
 
-    private fun setupRecyclerView() {
-        binding.assignmentRV.adapter=mAdapter
-        binding.assignmentRV.layoutManager=LinearLayoutManager(requireContext())
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.getStudentAssignments()
     }
 
+    private fun setupRecyclerView() {
+        binding.assignmentRV.adapter = mAdapter
+        binding.assignmentRV.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun observeViewModel() {
+        mainViewModel.studentAssignments.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Loading -> {
+                    binding.assignmentProgressBar.visibility = View.VISIBLE
+                }
+
+                is NetworkResult.Error -> {
+                    binding.assignmentProgressBar.visibility = View.GONE
+                    Toast.makeText(
+                        requireContext(),
+                        response.message ?: "Failed to load assignments",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                is NetworkResult.Success -> {
+                    binding.assignmentProgressBar.visibility = View.GONE
+                    val assignments = response.data ?: emptyList()
+                    if (assignments.isEmpty()) {
+                        binding.assignmentRV.visibility = View.GONE
+                        binding.assignmentEmptyCard.visibility = View.VISIBLE
+                    } else {
+                        binding.assignmentRV.visibility = View.VISIBLE
+                        binding.assignmentEmptyCard.visibility = View.GONE
+                        mAdapter.setData(assignments)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

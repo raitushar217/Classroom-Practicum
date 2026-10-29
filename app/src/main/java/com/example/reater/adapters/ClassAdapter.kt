@@ -18,7 +18,7 @@ class ClassAdapter: RecyclerView.Adapter<ClassAdapter.MyViewHolder>() {
     class MyViewHolder(private val binding: ClassesRowLayoutBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(course: Coursework){
             binding.individualCourse=course
-
+            binding.executePendingBindings()
         }
         companion object{
             fun from(parent: ViewGroup):MyViewHolder{
@@ -34,8 +34,16 @@ class ClassAdapter: RecyclerView.Adapter<ClassAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        var currentcourse=classlist[position]
+        val currentcourse=classlist[position]
         holder.bind(currentcourse)
+        holder.itemView.setOnClickListener {
+            try {
+                val action = com.example.reater.ui.fragments.HomeFragmentDirections.actionHomeFragmentToDetailsActivity(currentcourse)
+                androidx.navigation.Navigation.findNavController(it).navigate(action)
+            } catch (e: Exception) {
+                android.util.Log.e("ClassAdapter", "Nav error: $e")
+            }
+        }
     }
 
     override fun getItemCount(): Int {

@@ -103,5 +103,36 @@
     <color name="iiitu_white">#FFFFFF</color>
     <color name="iiitu_light_bg">#F5F7FA</color>
     <color name="iiitu_accent">#0066CC</color>
+
+    <!-- Classic Stylized Academic Theme Tokens -->
+    <color name="academic_canvas">#F8FAFC</color>
+    <color name="academic_card">#FFFFFF</color>
+    <color name="academic_stroke">#E2E8F0</color>
+    <color name="academic_stroke_light">#F1F5F9</color>
+    <color name="academic_text_primary">#0F172A</color>
+    <color name="academic_text_secondary">#64748B</color>
+    <color name="academic_text_muted">#94A3B8</color>
+    <color name="academic_indigo">#4F46E5</color>
+    <color name="academic_indigo_bg">#EEF2FF</color>
+    <color name="academic_emerald">#059669</color>
+    <color name="academic_emerald_bg">#ECFDF5</color>
+    <color name="academic_violet">#7C3AED</color>
+    <color name="academic_violet_bg">#F5F3FF</color>
+    <color name="academic_amber">#D97706</color>
+    <color name="academic_amber_bg">#FFFBEB</color>
+    <color name="academic_rose">#E11D48</color>
+    <color name="academic_rose_bg">#FFF1F2</color>
+
+    <!-- Badge Specific Tokens -->
+    <color name="badge_amber_bg">#FFFBEB</color>
+    <color name="badge_amber_tint">#D97706</color>
+    <color name="badge_rose_bg">#FFF1F2</color>
+    <color name="badge_rose_tint">#E11D48</color>
+    <color name="badge_indigo_bg">#EEF2FF</color>
+    <color name="badge_indigo_tint">#4F46E5</color>
+    <color name="badge_emerald_bg">#ECFDF5</color>
+    <color name="badge_emerald_tint">#059669</color>
+    <color name="badge_violet_bg">#F5F3FF</color>
+    <color name="badge_violet_tint">#7C3AED</color>
 </resources>
 

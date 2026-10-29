@@ -11,63 +11,69 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.findNavController
 import com.example.reater.R
 import com.example.reater.adapters.AssignmentAdapter
-import com.example.reater.adapters.TeacherHomeClassAdapter
 import com.example.reater.databinding.FragmentTeacherAssignmentBinding
-import com.example.reater.databinding.FragmentTeacherClassDetailsBinding
 import com.example.reater.utils.NetworkResult
-import com.example.reater.viewmodels.FirebaseViewmodel
+import com.example.reater.viewmodels.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class TeacherAssignmentFragment : Fragment() {
 
-    private var _binding: FragmentTeacherAssignmentBinding?=null
+    private var _binding: FragmentTeacherAssignmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var firebaseViewmodel: FirebaseViewmodel
-    var teacherID="12"
-    var classid: String="IT-E"
-    var subjectID:String="IT2129"
-    val mAdapter by lazy { AssignmentAdapter() }
+    private lateinit var mainViewModel: MainViewModel
+    private val mAdapter by lazy { AssignmentAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        firebaseViewmodel= ViewModelProvider(requireActivity())[FirebaseViewmodel::class.java]
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
     }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding=FragmentTeacherAssignmentBinding.inflate(layoutInflater,container,false)
-        binding.teacherRV.adapter=mAdapter
-        binding.teacherRV.layoutManager=LinearLayoutManager(requireContext())
+    ): View {
+        _binding = FragmentTeacherAssignmentBinding.inflate(layoutInflater, container, false)
+        binding.teacherRV.adapter = mAdapter
+        binding.teacherRV.layoutManager = LinearLayoutManager(requireContext())
         setupScreen()
-        
+
+        mAdapter.onItemClick = { assignment ->
+            val reviewSheet = TeacherAssignmentReviewBottomSheet.newInstance(assignment)
+            reviewSheet.show(childFragmentManager, "TeacherAssignmentReviewBottomSheet")
+        }
+
         binding.floatingActionButton.setOnClickListener {
-            // Navigate to assignment upload fragment
             findNavController().navigate(R.id.action_teacherAssignmentFragment_to_assignmentUploadFragment)
         }
-        
+
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.getStudentAssignments()
+    }
+
     private fun setupScreen() {
-        firebaseViewmodel.getAssignmentssRequest(classid, subjectID)
-        firebaseViewmodel.getAssignmentsResponse.observe(viewLifecycleOwner,{result->
-            when(result){
-                is NetworkResult.Error ->{
-                    Toast.makeText(requireContext(),"Network Error",Toast.LENGTH_SHORT).show()
+        mainViewModel.getStudentAssignments()
+        mainViewModel.studentAssignments.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is NetworkResult.Error -> {
+                    Toast.makeText(requireContext(), result.message ?: "Network Error", Toast.LENGTH_SHORT).show()
                 }
-                is NetworkResult.Success ->{
+                is NetworkResult.Success -> {
                     result.data?.let { mAdapter.setData(it) }
                 }
                 is NetworkResult.Loading -> {
                     // Show a loading indicator
                 }
             }
-        })
+        }
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

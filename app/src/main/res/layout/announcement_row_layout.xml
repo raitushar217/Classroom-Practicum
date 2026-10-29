@@ -2,81 +2,111 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
         <variable
             name="individual_announcement"
             type="com.example.reater.models.Announcement" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
 
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="6dp"
-        android:background="@drawable/rounded_bottom_rectangle"
-        >
+        app:cardBackgroundColor="@color/academic_card"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="1dp"
+        app:strokeColor="@color/academic_stroke"
+        app:strokeWidth="1dp">
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:background="@drawable/tcr"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/Teacher_image"
-            loadImageFromUrl="@{individual_announcement.authorpicture}"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-
-
-            android:scaleType="centerCrop"
-            android:src="@drawable/castle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
-
-        <TextView
-            android:id="@+id/Post_Author_Name"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@{individual_announcement.author}"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-medium"
-            app:layout_constraintStart_toEndOf="@+id/Teacher_image"
-            app:layout_constraintTop_toTopOf="@+id/Teacher_image" />
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/Post_Timestamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@{individual_announcement.timeStamp}"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif"
-            app:layout_constraintStart_toEndOf="@+id/Teacher_image"
-            app:layout_constraintTop_toBottomOf="@+id/Post_Author_Name" />
+            <!-- Backwards-compatibility stub for view -->
+            <View
+                android:id="@+id/view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/Announcement_Description"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="5dp"
-            android:padding="6dp"
-            android:text="@{individual_announcement.description}"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="13sp"
-            android:fontFamily="sans-serif"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Teacher_image" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Author Avatar -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/avatar_card"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                app:cardCornerRadius="21dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/academic_stroke"
+                app:strokeWidth="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/Teacher_image"
+                    loadImageFromUrl="@{individual_announcement.authorpicture}"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/castle" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Author & Time -->
+            <LinearLayout
+                android:id="@+id/author_meta_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/avatar_card"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/avatar_card"
+                app:layout_constraintTop_toTopOf="@+id/avatar_card">
+
+                <TextView
+                    android:id="@+id/Post_Author_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{individual_announcement.author}"
+                    android:textColor="@color/academic_text_primary"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:text="Prof. Sharma" />
+
+                <TextView
+                    android:id="@+id/Post_Timestamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="sans-serif"
+                    android:text="@{individual_announcement.timeStamp}"
+                    android:textColor="@color/academic_text_muted"
+                    android:textSize="12sp"
+                    tools:text="Yesterday at 3:45 PM" />
+            </LinearLayout>
+
+            <!-- Description -->
+            <TextView
+                android:id="@+id/Announcement_Description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="sans-serif"
+                android:lineSpacingExtra="3dp"
+                android:text="@{individual_announcement.description}"
+                android:textColor="@color/academic_text_secondary"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/avatar_card"
+                tools:text="Please note that the mid-semester evaluation for Data Structures has been scheduled for next Monday. Review modules 1 through 4." />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

@@ -10,94 +10,130 @@
             type="com.example.reater.models.StudyMaterial" />
     </data>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/rounded_bottom_rectangle"
-        android:paddingBottom="7dp">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="6dp"
+        app:cardBackgroundColor="@color/academic_card"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="1dp"
+        app:strokeColor="@color/academic_stroke"
+        app:strokeWidth="1dp">
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="0dp"
-            android:layout_height="24dp"
-            android:background="@drawable/drc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-
-            app:layout_constraintBottom_toBottomOf="@+id/Download_Button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/File_Title"
-            app:srcCompat="@drawable/file" />
-
-        <TextView
-            android:id="@+id/File_Title"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="16dp"
-            android:text="@{individual_studymaterial.filename}"
-            android:padding="5dp"
+            android:padding="16dp">
 
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toBottomOf="@+id/view2" />
+            <!-- Compatibility stub for view2 -->
+            <View
+                android:id="@+id/view2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/file_timestamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="7dp"
-            android:text="@{individual_studymaterial.timestamp}"
-            android:textColor="?attr/colorOnSurfaceVariant"
-            android:textSize="11sp"
-            android:fontFamily="sans-serif"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toBottomOf="@+id/File_Title" />
+            <!-- Document Icon Badge -->
+            <FrameLayout
+                android:id="@+id/file_icon_badge"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/circle_white_bg"
+                android:backgroundTint="@color/badge_indigo_bg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/Author_Name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="10dp"
-            android:text="@{individual_studymaterial.authorName}"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="12sp"
-            android:fontFamily="sans-serif-medium"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toBottomOf="@+id/file_timestamp" />
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    app:tint="@color/academic_indigo"
+                    app:srcCompat="@drawable/ic_baseline_insert_drive_file_24" />
+            </FrameLayout>
 
-        <TextView
-            android:id="@+id/Download_Button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/redblue_gradient"
-            android:gravity="center"
-            android:text="Download"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:fontFamily="sans-serif-medium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toBottomOf="@+id/Author_Name" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- File Title -->
+            <TextView
+                android:id="@+id/File_Title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="1"
+                android:text="@{individual_studymaterial.filename}"
+                android:textColor="@color/academic_text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/file_icon_badge"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Lecture_04_Tree_Traversal.pdf" />
+
+            <!-- Author & Timestamp -->
+            <LinearLayout
+                android:id="@+id/file_meta_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/file_icon_badge"
+                app:layout_constraintTop_toBottomOf="@+id/File_Title">
+
+                <TextView
+                    android:id="@+id/Author_Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{individual_studymaterial.authorName}"
+                    android:textColor="@color/academic_text_secondary"
+                    android:textSize="12sp"
+                    tools:text="Dr. Alok" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="6dp"
+                    android:text="•"
+                    android:textColor="@color/academic_text_muted"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/file_timestamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:text="@{individual_studymaterial.timestamp}"
+                    android:textColor="@color/academic_text_muted"
+                    android:textSize="11sp"
+                    tools:text="2 days ago" />
+            </LinearLayout>
+
+            <!-- Download Button -->
+            <TextView
+                android:id="@+id/Download_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/rounded_corner_subdetail"
+                android:backgroundTint="@color/badge_indigo_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:fontFamily="sans-serif-medium"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="7dp"
+                android:text="Download File"
+                android:textColor="@color/academic_indigo"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/file_meta_layout"
+                app:layout_constraintTop_toBottomOf="@+id/file_meta_layout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

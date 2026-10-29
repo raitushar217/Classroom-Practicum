@@ -177,39 +177,13 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <!-- Standard Constraints preserved inside standard material frame -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout4"
+                <ImageView
+                    android:id="@+id/iv_uploaded_image"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="300dp"
                     android:layout_marginBottom="32dp"
-                    android:background="?attr/colorPrimaryContainer"
-                    android:padding="16dp">
-
-                    <ImageView
-                        android:id="@+id/imageView25"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/file"
-                        app:tint="?attr/colorOnPrimaryContainer"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/textView44"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:text="Uploaded Assignment"
-                        android:textColor="?attr/colorOnPrimaryContainer"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView25"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:background="?attr/colorSurfaceVariant"
+                    android:scaleType="fitCenter" />
 
                 <!-- My Work Section -->
                 <LinearLayout

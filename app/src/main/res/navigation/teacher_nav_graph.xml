@@ -55,12 +55,24 @@
         android:id="@+id/teacherQuizFragment"
         android:name="com.example.reater.teacherapp.fragments.TeacherQuiz.TeacherQuizFragment"
         android:label="fragment_teacher_quiz"
-        tools:layout="@layout/fragment_teacher_quiz" />
+        tools:layout="@layout/fragment_teacher_quiz">
+        <argument
+            android:name="course"
+            app:argType="com.example.reater.models.Coursework" />
+    </fragment>
     <fragment
         android:id="@+id/teacherParticipantsFragment2"
         android:name="com.example.reater.teacherapp.fragments.TeacherParticipantsFragment"
         android:label="fragment_teacher_participants"
-        tools:layout="@layout/fragment_teacher_participants" />
+        tools:layout="@layout/fragment_teacher_participants">
+        <argument
+            android:name="course"
+            app:argType="com.example.reater.models.Coursework" />
+        <argument
+            android:name="initialTab"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
     <fragment
         android:id="@+id/addStudyMaterialFragment"
         android:name="com.example.reater.teacherapp.fragments.TeacherStudyMaterial.AddStudyMaterialFragment"

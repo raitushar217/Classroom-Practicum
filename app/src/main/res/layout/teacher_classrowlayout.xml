@@ -9,66 +9,155 @@
             type="com.example.reater.models.Coursework" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        app:onTeacherClassClickListener="@{classdetails}"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="2dp"
-        android:layout_marginVertical="5dp"
-        android:background="@drawable/rec_round_bg">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="7dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardBackgroundColor="@color/academic_card"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="2dp"
+        app:strokeColor="@color/academic_stroke"
+        app:strokeWidth="1dp">
 
-
-        <TextView
-            android:id="@+id/subject_name"
-            android:layout_width="0dp"
-
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@{classdetails.subjectName}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/view6"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:padding="16dp"
+            app:onTeacherClassClickListener="@{classdetails}">
 
-        <TextView
-            android:id="@+id/th_section_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@{classdetails.classID}"
-            app:layout_constraintStart_toEndOf="@+id/view6"
-            app:layout_constraintTop_toBottomOf="@+id/subject_name" />
+            <!-- Icon Container -->
+            <FrameLayout
+                android:id="@+id/th_icon_container"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/circle_white_bg"
+                android:backgroundTint="@color/badge_violet_bg"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/th_subjectid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="28dp"
-            android:text="@{classdetails.subjectID}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subject_name" />
+                <ImageView
+                    android:id="@+id/th_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    app:tint="@color/badge_violet_tint"
+                    app:srcCompat="@drawable/ic_baseline_insert_drive_file_24" />
+            </FrameLayout>
 
-        <View
-            android:id="@+id/view6"
-            android:layout_width="30dp"
-            android:layout_height="0dp"
-            android:background="@drawable/lcr"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <!-- Subject Name -->
+            <TextView
+                android:id="@+id/subject_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="10dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:maxLines="1"
+                android:text="@{classdetails.subjectName}"
+                android:textColor="@color/academic_text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/th_subjectid_card"
+                app:layout_constraintStart_toEndOf="@+id/th_icon_container"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Computer Architecture" />
 
-        <TextView
-            android:id="@+id/academic_session"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/th_section_id"
-            app:layout_constraintTop_toBottomOf="@+id/th_section_id" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- Subject Code Badge -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/th_subjectid_card"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                app:cardBackgroundColor="@color/badge_violet_bg"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/th_subjectid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingHorizontal="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{classdetails.subjectID}"
+                    android:textColor="@color/badge_violet_tint"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    tools:text="CS-204" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Metadata Row: Section & Session -->
+            <LinearLayout
+                android:id="@+id/th_meta_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/th_chevron_container"
+                app:layout_constraintStart_toEndOf="@+id/th_icon_container"
+                app:layout_constraintTop_toBottomOf="@+id/subject_name">
+
+                <TextView
+                    android:id="@+id/th_section_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@{`Sec: ` + classdetails.classID}"
+                    android:textColor="@color/academic_text_secondary"
+                    android:textSize="12sp"
+                    tools:text="Sec: CS-A" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="6dp"
+                    android:text="•"
+                    android:textColor="@color/academic_text_muted"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/academic_session"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="sans-serif"
+                    android:maxLines="1"
+                    android:text="@{classdetails.semester + ` • ` + classdetails.academicSession}"
+                    android:textColor="@color/academic_text_secondary"
+                    android:textSize="12sp"
+                    tools:text="4th Sem • 2026-2027" />
+            </LinearLayout>
+
+            <!-- Trailing Chevron -->
+            <FrameLayout
+                android:id="@+id/th_chevron_container"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:background="@drawable/circle_white_bg"
+                android:backgroundTint="@color/academic_stroke_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center"
+                    android:rotation="180"
+                    android:src="@drawable/baseline_arrow_back_24"
+                    app:tint="@color/badge_violet_tint" />
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

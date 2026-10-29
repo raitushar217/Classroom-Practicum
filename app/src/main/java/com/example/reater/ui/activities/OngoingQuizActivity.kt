@@ -1,4 +1,4 @@
-﻿package com.example.reater.ui.activities
+package com.example.reater.ui.activities
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -26,6 +26,8 @@ class OngoingQuizActivity : AppCompatActivity() {
     // Track user answers (Key: Question Index, Value: Selected Option String like "Option 1")
     private val userAnswers = mutableMapOf<Int, String>()
     private var isSubmitting = false
+    private var isQuizStarted = false
+    private var isInternalDialogShowing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,18 +40,28 @@ class OngoingQuizActivity : AppCompatActivity() {
 
         binding = ActivityOngoingQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val extraQuiz = intent.getParcelableExtra<Quiz>("quiz")
+        quiz = extraQuiz ?: try {
+            args.quiz
+        } catch (e: Exception) {
+            Quiz()
+        }
 
-         quiz = args.quiz
-        binding.question=quiz.quizList[0]
+        if (!quiz.quizList.isNullOrEmpty()) {
+            binding.question = quiz.quizList?.get(0)
+        }
         
         showProctoringStartDialog()
     }
 
     private fun showProctoringStartDialog() {
+        isInternalDialogShowing = true
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Proctoring Rules")
         builder.setMessage("This quiz is strictly proctored.\n\n• Do NOT minimize the app.\n• Do NOT switch windows or open notifications.\n• Screenshots are disabled.\n\nAny violation will forcefully submit your quiz. Click below when you are ready.")
         builder.setPositiveButton("Start Test") { _, _ ->
+            isInternalDialogShowing = false
+            isQuizStarted = true
             setupUi()
         }
         builder.setCancelable(false)
@@ -57,9 +69,10 @@ class OngoingQuizActivity : AppCompatActivity() {
     }
 
     private fun setupUi() {
-        binding.qnoRV.adapter=qadapter
-        binding.qnoRV.layoutManager=LinearLayoutManager(this)
-        binding.progressBar3.max=quiz.quizDuration.toInt()*60000
+        binding.qnoRV.adapter = qadapter
+        binding.qnoRV.layoutManager = LinearLayoutManager(this)
+        val durationMins = (quiz.quizDuration?.toIntOrNull() ?: 15).coerceAtLeast(1)
+        binding.progressBar3.max = durationMins * 60000
         
         updateQuestionUI()
 
@@ -75,7 +88,7 @@ class OngoingQuizActivity : AppCompatActivity() {
 
         binding.nextQuestion.setOnClickListener {
             saveCurrentAnswer()
-            if (currentQuestionIndex == quiz.quizList.size - 1) {
+            if (currentQuestionIndex == (quiz.quizList?.size ?: 0) - 1) {
                 showSubmitConfirmDialog()
             } else {
                 currentQuestionIndex++
@@ -104,7 +117,7 @@ class OngoingQuizActivity : AppCompatActivity() {
     }
 
     private fun updateQuestionUI() {
-        binding.question = quiz.quizList[currentQuestionIndex]
+        binding.question = quiz.quizList?.get(currentQuestionIndex)
         binding.radioGroup.clearCheck() // Clear selected radio button naturally
 
         // Restore previous answer if they revisit the question
@@ -118,7 +131,7 @@ class OngoingQuizActivity : AppCompatActivity() {
             }
         }
         
-        if (currentQuestionIndex == quiz.quizList.size - 1) {
+        if (currentQuestionIndex == (quiz.quizList?.size ?: 0) - 1) {
             binding.nextQuestion.text = "Submit Quiz"
         } else {
             binding.nextQuestion.text = "Next Question"
@@ -126,13 +139,16 @@ class OngoingQuizActivity : AppCompatActivity() {
     }
 
     private fun showSubmitConfirmDialog() {
+        isInternalDialogShowing = true
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Submit Test?")
         builder.setMessage("Are you sure you want to submit the test?")
         builder.setPositiveButton("Yes") { _, _ ->
+            isInternalDialogShowing = false
             submitQuiz()
         }
         builder.setNegativeButton("No") { dialog, _ ->
+            isInternalDialogShowing = false
             dialog.dismiss()
         }
         builder.create().show()
@@ -146,10 +162,10 @@ class OngoingQuizActivity : AppCompatActivity() {
         saveCurrentAnswer() // Ensure last action is captured
 
         var score = 0
-        val total = quiz.quizList.size
+        val total = quiz.quizList?.size ?: 0
 
         for (i in 0 until total) {
-            val correctAns = quiz.quizList[i].CorrectAnswer
+            val correctAns = quiz.quizList?.get(i)?.CorrectAnswer ?: ""
             val userAns = userAnswers[i]
             
             // Checking like "Option 3" == "Option 3"
@@ -168,9 +184,10 @@ class OngoingQuizActivity : AppCompatActivity() {
     }
 
     private fun startTimer() {
-        timer = object : CountDownTimer(quiz.quizDuration.toLong() * 60000, 1000) { // Convert minutes to milliseconds
+        val durationMins = (quiz.quizDuration?.toLongOrNull() ?: 15L).coerceAtLeast(1L)
+        timer = object : CountDownTimer(durationMins * 60000, 1000) { // Convert minutes to milliseconds
             override fun onTick(millisUntilFinished: Long) {
-                binding.progressBar3.progress= (millisUntilFinished).toInt()
+                binding.progressBar3.progress = millisUntilFinished.toInt()
                 val totalSecondsLeft = millisUntilFinished / 1000
                 val minutesLeft = totalSecondsLeft / 60
                 val secondsLeft = totalSecondsLeft % 60
@@ -186,13 +203,16 @@ class OngoingQuizActivity : AppCompatActivity() {
     }
 
     private fun showAlertDialog() {
+        isInternalDialogShowing = true
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Submit Quiz?")
         builder.setMessage("Are you sure you want to leave? This action will forcefully submit your active quiz.")
         builder.setPositiveButton("Submit") { _, _ ->
+            isInternalDialogShowing = false
             submitQuiz()
         }
         builder.setNegativeButton("Cancel") { dialog, _ ->
+            isInternalDialogShowing = false
             dialog.dismiss() 
             startTimer() 
         }
@@ -201,13 +221,15 @@ class OngoingQuizActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        timer.cancel() 
+        if (this::timer.isInitialized) {
+            timer.cancel()
+        }
         showAlertDialog()
     }
 
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
-        if (!isSubmitting) {
+        if (isQuizStarted && !isSubmitting) {
             Toast.makeText(this, "Quiz forcefully submitted due to app switching/minimizing!", Toast.LENGTH_LONG).show()
             submitQuiz()
         }
@@ -215,8 +237,8 @@ class OngoingQuizActivity : AppCompatActivity() {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (!hasFocus && !isSubmitting) {
-            Toast.makeText(this, "Proctoring Warning: Please do not change windows or open notifications!", Toast.LENGTH_SHORT).show()
+        if (!hasFocus && isQuizStarted && !isSubmitting && !isInternalDialogShowing) {
+            Toast.makeText(this, "Proctoring Warning: Please do not change windows or pull down notifications!", Toast.LENGTH_SHORT).show()
             submitQuiz()
         }
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
+    android:background="@color/academic_canvas"
     tools:context=".ui.fragments.UserProfileFragment">
 
     <!-- Header Section -->
@@ -12,10 +12,11 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Profile"
-        android:textColor="?attr/colorPrimary"
-        android:textSize="28sp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Student Profile"
+        android:textColor="@color/academic_text_primary"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,11 +24,11 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/User_Image"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/student2"
-        app:civ_border_color="?attr/colorPrimary"
+        app:civ_border_color="@color/academic_indigo"
         app:civ_border_width="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,19 +38,20 @@
         android:id="@+id/User_Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Madhav Sharma"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="24sp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="@color/academic_text_primary"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/User_Image" />
+        app:layout_constraintTop_toBottomOf="@+id/User_Image"
+        tools:text="Madhav Sharma" />
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:clipToPadding="false"
         android:paddingBottom="88dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,42 +63,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="24dp">
+            android:paddingHorizontal="20dp">
 
             <!-- Enrollment ID -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/academic_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/academic_stroke"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="12dp">
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="14dp">
 
                     <TextView
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Enrollment ID"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="sans-serif-medium"
+                        android:text="ENROLLMENT ID"
+                        android:textColor="@color/academic_indigo"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.05" />
 
                     <TextView
                         android:id="@+id/EnrollmentValue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="TextView"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textSize="18sp" />
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/academic_text_primary"
+                        android:textSize="16sp"
+                        tools:text="202201044" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -104,36 +109,39 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/academic_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/academic_stroke"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="12dp">
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="14dp">
 
                     <TextView
                         android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="sans-serif-medium"
+                        android:text="INSTITUTION EMAIL"
+                        android:textColor="@color/academic_indigo"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.05" />
 
                     <TextView
                         android:id="@+id/email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="TextView"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textSize="18sp" />
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/academic_text_primary"
+                        android:textSize="16sp"
+                        tools:text="student@iiitu.ac.in" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -142,74 +150,80 @@
                 android:id="@+id/personalContactCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/academic_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/academic_stroke"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="12dp">
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="14dp">
 
                     <TextView
                         android:id="@+id/textView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Personal Contact"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="sans-serif-medium"
+                        android:text="CONTACT NUMBER"
+                        android:textColor="@color/academic_indigo"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.05" />
 
                     <TextView
                         android:id="@+id/contact"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="TextView"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textSize="18sp" />
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/academic_text_primary"
+                        android:textSize="16sp"
+                        tools:text="+91 9876543210" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Address -->
+            <!-- Address / DOB -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/addressCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/academic_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/academic_stroke"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="12dp">
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="14dp">
 
                     <TextView
                         android:id="@+id/textView11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Address"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="sans-serif-medium"
+                        android:text="DATE OF BIRTH"
+                        android:textColor="@color/academic_indigo"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.05" />
 
                     <TextView
                         android:id="@+id/address_"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="TextView"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textSize="18sp" />
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/academic_text_primary"
+                        android:textSize="16sp"
+                        tools:text="15 Aug 2003" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -218,36 +232,39 @@
                 android:id="@+id/enrollmentYearCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/academic_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/academic_stroke"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="12dp">
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="14dp">
 
                     <TextView
                         android:id="@+id/textView12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Enrollment Year"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="sans-serif-medium"
+                        android:text="ENROLLMENT YEAR"
+                        android:textColor="@color/academic_indigo"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.05" />
 
                     <TextView
                         android:id="@+id/Ey_"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="TextView"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textSize="18sp" />
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/academic_text_primary"
+                        android:textSize="16sp"
+                        tools:text="2022" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -256,74 +273,80 @@
                 android:id="@+id/classIdCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/academic_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/academic_stroke"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="12dp">
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="14dp">
 
                     <TextView
                         android:id="@+id/textView13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Class ID"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="sans-serif-medium"
+                        android:text="SECTION / CLASS ID"
+                        android:textColor="@color/academic_indigo"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.05" />
 
                     <TextView
                         android:id="@+id/Cid"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="TextView"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textSize="18sp" />
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/academic_text_primary"
+                        android:textSize="16sp"
+                        tools:text="CS-A" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- DOB (Date of Birth) Added Just in Case -->
+            <!-- DOB Fallback Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/dobContainerCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardBackgroundColor="?attr/colorSurfaceVariant"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="0dp">
+                app:cardBackgroundColor="@color/academic_card"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="1dp"
+                app:strokeColor="@color/academic_stroke"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="12dp">
+                    android:paddingHorizontal="18dp"
+                    android:paddingVertical="14dp">
 
                     <TextView
                         android:id="@+id/textView14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Date of Birth"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
+                        android:fontFamily="sans-serif-medium"
+                        android:text="DATE OF BIRTH"
+                        android:textColor="@color/academic_indigo"
+                        android:textSize="11sp"
+                        android:letterSpacing="0.05" />
 
                     <TextView
                         android:id="@+id/dateofbirth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="TextView"
-                        android:textColor="?attr/colorOnSurfaceVariant"
-                        android:textSize="18sp" />
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/academic_text_primary"
+                        android:textSize="16sp"
+                        tools:text="15 Aug 2003" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

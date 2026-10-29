@@ -172,7 +172,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="16dp"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                android:visibility="gone">
 
                 <!-- Class ID Spinner -->
                 <com.google.android.material.card.MaterialCardView

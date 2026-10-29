@@ -19,8 +19,10 @@ import com.example.reater.utils.Constants.Companion.DEGREE_MAP
 import com.example.reater.utils.NetworkResult
 import com.example.reater.utils.TokenManager
 import com.example.reater.viewmodels.AuthenticationViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
@@ -71,8 +73,17 @@ class SignUpFragment : Fragment() {
             var email=binding.EmailSignupValue.text.toString()
 
             if (enrolmentNumber.isNotEmpty() && password.isNotEmpty()&& enrolmentYear.isNotEmpty() && fullname.isNotEmpty() && dob.isNotEmpty() && phone.isNotEmpty()) {
-                val signupRequest = SignupRequest(enrolmentNumber,password,
-                    Student(enrolmentNumber,fullname,DEGREE_MAP[degreename].toString(),classid,phone,enrolmentYear,email, dob)
+                val names = fullname.split(" ")
+                val firstName = names.firstOrNull() ?: ""
+                val lastName = if (names.size > 1) names.drop(1).joinToString(" ") else ""
+                
+                val signupRequest = SignupRequest(
+                    Enrollment = enrolmentNumber,
+                    password = password,
+                    first_name = firstName,
+                    last_name = lastName,
+                    batch = enrolmentYear,
+                    section_code = classid
                 )
                 sendStudentSignupRequest(signupRequest)
             }

@@ -11,79 +11,72 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reater.adapters.FilesAdapter
 import com.example.reater.databinding.FragmentFilesBinding
 import com.example.reater.models.Coursework
-import com.example.reater.models.StudyMaterial
 import com.example.reater.utils.Constants.Companion.COURSEWORK_RESULT_KEY
 import com.example.reater.utils.NetworkResult
-import com.example.reater.viewmodels.FirebaseViewmodel
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.example.reater.viewmodels.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class FilesFragment : Fragment() {
 
-    private var _binding: FragmentFilesBinding?=null
+    private var _binding: FragmentFilesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var firebaseViewmodel: FirebaseViewmodel
-    private val filesAdapter by lazy{ FilesAdapter() }
+    private lateinit var mainViewModel: MainViewModel
+    private val filesAdapter by lazy { FilesAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        firebaseViewmodel= ViewModelProvider(requireActivity())[FirebaseViewmodel::class.java]
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
     }
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentFilesBinding.inflate(inflater, container, false)
 
+        setupRecyclerView()
 
-        _binding= FragmentFilesBinding.inflate(inflater, container,false)
+        val coursework = arguments?.getParcelable<Coursework>(COURSEWORK_RESULT_KEY)
+        val subjectCode = coursework?.SubjectID
 
-        var args=arguments
-         setupRecyclerView()
-         var coursework=args?.getParcelable<Coursework>(COURSEWORK_RESULT_KEY) as Coursework
-
-         requestData(coursework.ClassID,coursework.SubjectID)
+        observeViewModel()
+        mainViewModel.fetchStudyMaterials(subjectCode)
 
         return binding.root
     }
 
-    private fun setupRecyclerView() {
-        binding.fileRV.adapter=filesAdapter
-        binding.fileRV.layoutManager= LinearLayoutManager(requireContext())
-
+    override fun onResume() {
+        super.onResume()
+        val coursework = arguments?.getParcelable<Coursework>(COURSEWORK_RESULT_KEY)
+        mainViewModel.fetchStudyMaterials(coursework?.SubjectID)
     }
 
-    private fun requestData(classID: String,subjectID: String) {
-        firebaseViewmodel.getStudyMaterials(classID,subjectID)
-        firebaseViewmodel.filesResponse.observe(viewLifecycleOwner,{ response->
-            when(response){
-                is NetworkResult.Success->{
-                    response.data.let{
-                        if (it != null) {
-                            filesAdapter.setData(it)
-                        }
-                        else{
-                            Toast.makeText(
-                                requireContext(),
-                                "Null data",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
+    private fun setupRecyclerView() {
+        binding.fileRV.adapter = filesAdapter
+        binding.fileRV.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun observeViewModel() {
+        mainViewModel.studyMaterialsResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    val materials = response.data ?: emptyList()
+                    filesAdapter.setData(materials)
                 }
-                is NetworkResult.Error->{
+                is NetworkResult.Error -> {
                     Toast.makeText(
                         requireContext(),
-                        response.message.toString(),
+                        response.message ?: "Failed to load files",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
                 is NetworkResult.Loading -> {
-                    // Show a loading indicator
+                    // loading state
                 }
             }
-        })
+        }
     }
 
-
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

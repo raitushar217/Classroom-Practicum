@@ -1,4 +1,4 @@
-﻿package com.example.reater.teacherapp.fragments.TeacherAnnouncement
+package com.example.reater.teacherapp.fragments.TeacherAnnouncement
 
 import android.net.Uri
 import android.os.Bundle
@@ -13,24 +13,24 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.reater.R
 import com.example.reater.databinding.FragmentTeacherPostBinding
-import com.example.reater.models.Announcement
-import com.example.reater.viewmodels.FirebaseViewmodel
-import com.google.android.material.card.MaterialCardView
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.reater.utils.NetworkResult
+import com.example.reater.utils.TokenManager
+import com.example.reater.viewmodels.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TeacherPostFragment : Fragment() {
 
     private var _binding: FragmentTeacherPostBinding? = null
     private val binding get() = _binding!!
-    private lateinit var firebaseViewmodel: FirebaseViewmodel
-    var authordp = "SADASD"
-    var authorname = "Veena Khandelwal"
-    var classid: String = "IT-E"
-    var subjectID: String = "IT2121"
-    
+    private lateinit var mainViewModel: MainViewModel
+
+    @Inject
+    lateinit var tokenManager: TokenManager
+
     private var attachedImageUri: Uri? = null
-    
+
     private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) {
             attachedImageUri = uri
@@ -46,38 +46,59 @@ class TeacherPostFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        firebaseViewmodel = ViewModelProvider(requireActivity())[FirebaseViewmodel::class.java]
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentTeacherPostBinding.inflate(layoutInflater, container, false)
-        
+
         binding.backButton.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-        
+
         binding.btnAttachImage.setOnClickListener {
             imagePickerLauncher.launch("image/*")
         }
-        
+
         binding.teacherSmSubmitButtonLayout.setOnClickListener {
-            addAnnouncement(binding.teacherSmSubmitButtonLayout)
+            postAnnouncement()
         }
-        
+
+        observeViewModel()
+
         return binding.root
     }
 
-    private fun addAnnouncement(layout: MaterialCardView) {
+    private fun postAnnouncement() {
         val text = binding.teacherAnnouncementText.text.toString().trim()
-        if (text.isEmpty() && attachedImageUri == null) {
-            Toast.makeText(requireContext(), "Please add text or an image", Toast.LENGTH_SHORT).show()
+        if (text.isEmpty()) {
+            Toast.makeText(requireContext(), "Please add announcement text", Toast.LENGTH_SHORT).show()
             return
         }
-        
-        val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().time)
-        val announcement = Announcement(authorname, timestamp, authordp, text)
-        
-        firebaseViewmodel.addAnnouncement(layout, classid, subjectID, announcement)
+
+        // Use teacher's name from TokenManager as title prefix
+        val teacherName = tokenManager.getUserName() ?: "Teacher"
+        val title = "Announcement by $teacherName"
+        mainViewModel.createNotice(title = title, description = text)
+    }
+
+    private fun observeViewModel() {
+        mainViewModel.createNoticeResponse.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is NetworkResult.Loading -> {
+                    binding.teacherSmSubmitButtonLayout.isEnabled = false
+                }
+                is NetworkResult.Success -> {
+                    binding.teacherSmSubmitButtonLayout.isEnabled = true
+                    Toast.makeText(requireContext(), "Announcement posted successfully!", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_teacherPostFragment_to_teacherAnnouncementsFragment)
+                }
+                is NetworkResult.Error -> {
+                    binding.teacherSmSubmitButtonLayout.isEnabled = true
+                    Toast.makeText(requireContext(), result.message ?: "Failed to post", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun getFileName(uri: Uri): String {
@@ -101,7 +122,7 @@ class TeacherPostFragment : Fragment() {
         }
         return result ?: "Unknown Image"
     }
-    
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

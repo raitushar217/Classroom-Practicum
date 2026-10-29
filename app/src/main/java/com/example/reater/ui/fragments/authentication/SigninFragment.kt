@@ -19,6 +19,7 @@ import com.example.reater.viewmodels.AuthenticationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class SigninFragment : Fragment() {
     private var _binding:FragmentSigninBinding?=null
     private val binding get() = _binding!!
@@ -35,43 +36,48 @@ class SigninFragment : Fragment() {
 
 
         _binding= FragmentSigninBinding.inflate(inflater, container, false)
-        binding.progressBar.visibility=View.INVISIBLE
-        binding.loginbox.setOnClickListener {
-            /*var enrollment=binding.emailEditText.text.toString()
-            var password=binding.passwordEditText.text.toString()
-            loginStudent(LoginRequest(enrollment,password))*/
-            var intent=Intent(requireContext(),MainActivity::class.java)
-            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent)
+        binding.progressBar.visibility = View.INVISIBLE
+        val doLogin = {
+            val enrollment = binding.emailEditText.text.toString().trim()
+            val password = binding.passwordEditText.text.toString().trim()
+            if (enrollment.isNotEmpty() && password.isNotEmpty()) {
+                loginStudent(LoginRequest(enrollment, password))
+            } else {
+                Toast.makeText(requireContext(), "Please fill in all fields.", Toast.LENGTH_SHORT).show()
+            }
         }
+        binding.loginbox.setOnClickListener { doLogin() }
+        binding.materialCardView.setOnClickListener { doLogin() }
         return binding.root
     }
 
     private fun loginStudent(loginRequest: LoginRequest) {
         authenticationViewModel.getStudentProfile(loginRequest)
 
-        authenticationViewModel.StudentProfileResponse.observe(viewLifecycleOwner,{response->
-            when (response){
-                is NetworkResult.Loading->{
-                    binding.progressBar.visibility=View.VISIBLE
+        authenticationViewModel.StudentProfileResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
                 }
 
-                is NetworkResult.Error->{
-                    binding.progressBar.visibility=View.INVISIBLE
-                    Toast.makeText(requireContext(),"Error Connecting to Server",Toast.LENGTH_SHORT).show()
+                is NetworkResult.Error -> {
+                    binding.progressBar.visibility = View.INVISIBLE
+                    Toast.makeText(requireContext(), response.message ?: "Error Connecting to Server", Toast.LENGTH_SHORT).show()
                 }
 
-                is NetworkResult.Success->{
-                    binding.progressBar.visibility=View.INVISIBLE
-                    Toast.makeText(requireContext(),"Successfully Logged In ",Toast.LENGTH_SHORT).show()
-                    tokenManager.saveToken(response.data!!.token)
-                    var intent=Intent(requireContext(),MainActivity::class.java)
-                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                is NetworkResult.Success -> {
+                    binding.progressBar.visibility = View.INVISIBLE
+                    Toast.makeText(requireContext(), "Successfully Logged In", Toast.LENGTH_SHORT).show()
+                    response.data?.let { data ->
+                        tokenManager.saveToken(data.token)
+                        tokenManager.saveUserInfo(data.user.identificationNumber, data.user.name ?: "")
+                    }
+                    val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
-
+                    requireActivity().finish()
                 }
             }
-        })
+        }
     }
 
 

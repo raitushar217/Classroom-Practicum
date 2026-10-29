@@ -66,7 +66,7 @@ fun QuizCard(
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = quiz.quizname,
+                        text = quiz.quizname ?: "",
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = 2,
@@ -74,7 +74,7 @@ fun QuizCard(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = quiz.syllabus,
+                        text = quiz.syllabus ?: "",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -113,7 +113,7 @@ fun QuizCard(
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = quiz.quizSchedule,
+                        text = quiz.quizSchedule ?: "",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -137,7 +137,7 @@ fun QuizCard(
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "${quiz.quizDuration} hours",
+                        text = "${quiz.quizDuration ?: "0"} hours",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurface
                     )
@@ -152,7 +152,7 @@ fun QuizCard(
                 color = MaterialTheme.colorScheme.tertiaryContainer
             ) {
                 Text(
-                    text = "${quiz.quizList.size} Questions",
+                    text = "${quiz.quizList?.size ?: 0} Questions",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onTertiaryContainer,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)

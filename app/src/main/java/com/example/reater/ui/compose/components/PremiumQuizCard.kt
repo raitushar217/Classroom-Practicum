@@ -81,7 +81,7 @@ fun PremiumQuizCard(
 
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = quiz.quizname,
+                        text = quiz.quizname ?: "",
                         style = MaterialTheme.typography.titleLarge,
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
@@ -89,7 +89,7 @@ fun PremiumQuizCard(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = quiz.syllabus,
+                        text = quiz.syllabus ?: "",
                         style = MaterialTheme.typography.bodyMedium,
                         color = Color.White.copy(alpha = 0.9f),
                         fontWeight = FontWeight.Medium
@@ -112,7 +112,7 @@ fun PremiumQuizCard(
                     QuizDetailItem(
                         icon = Icons.Outlined.CalendarToday,
                         label = "Schedule",
-                        value = quiz.quizSchedule,
+                        value = quiz.quizSchedule ?: "",
                         color = PrimaryBlue
                     )
 
@@ -140,7 +140,7 @@ fun PremiumQuizCard(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "${quiz.quizList.size}",
+                            text = "${quiz.quizList?.size ?: 0}",
                             style = MaterialTheme.typography.headlineSmall,
                             color = SuccessGreen,
                             fontWeight = FontWeight.Bold

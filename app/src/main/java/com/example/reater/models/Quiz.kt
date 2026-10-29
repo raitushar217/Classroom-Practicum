@@ -7,25 +7,25 @@ import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class Quiz(
-    @SerializedName("quizSchedule")
-    var quizSchedule: String,
+    @SerializedName("due_date")
+    var quizSchedule: String? = null,
 
-    @SerializedName("syllabus")
-    var syllabus:String,
+    @SerializedName("quiz_description")
+    var syllabus: String? = null,
 
-    @SerializedName("quizDuration")
-    var quizDuration: String,
+    @SerializedName("time_limit_minutes")
+    var quizDuration: String? = null,
 
     @SerializedName("subject_id")
-    var subjectId: String,
+    var subjectId: String? = null,
 
-    @SerializedName("quiz_list")
-    var quizList:@RawValue List<Question>,
+    @SerializedName("questions")
+    var quizList: @RawValue List<Question>? = null,
 
-    @SerializedName("QuizName")
-    var quizname: String,
+    @SerializedName("quiz_name")
+    var quizname: String? = null,
 
-    @SerializedName("class_id")
-    var classId: String
+    @SerializedName("id")
+    var classId: String? = null
 
-):Parcelable
+): Parcelable

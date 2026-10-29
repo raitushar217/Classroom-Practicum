@@ -6,19 +6,18 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Subjects(
-    @SerializedName("SubjectID")
-    val SubjectID: String,
+    @SerializedName("code")
+    val SubjectID: String? = null,
 
-    @SerializedName("SubjectName")
-    val SubjectName: String,
+    @SerializedName("name")
+    val SubjectName: String? = null,
 
-    @SerializedName("SubjectDescription")
-    val SubjectDescription: String,
+    @SerializedName("description")
+    val SubjectDescription: String? = null,
 
-    @SerializedName("LECTURE_ID")
-    val LECTURE_ID: String,
+    @SerializedName("lecture_id")
+    val LECTURE_ID: String? = null,
 
-    @SerializedName("SubjectID")
-    val name: String
-
+    @SerializedName("name")
+    val name: String? = null
 ): Parcelable

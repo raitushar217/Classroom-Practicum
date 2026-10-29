@@ -1,53 +1,59 @@
 package com.example.reater.ui.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.reater.R
 import com.example.reater.adapters.NotesAdapter
 import com.example.reater.databinding.FragmentNotesBinding
 import com.example.reater.models.Coursework
 import com.example.reater.utils.Constants
 import com.example.reater.utils.NetworkResult
-import com.example.reater.viewmodels.FirebaseViewmodel
+import com.example.reater.viewmodels.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class NotesFragment : Fragment() {
 
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
-    private lateinit var firebaseViewmodel: FirebaseViewmodel
+    private lateinit var mainViewModel: MainViewModel
     private val notesAdapter by lazy { NotesAdapter() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        firebaseViewmodel = ViewModelProvider(requireActivity())[FirebaseViewmodel::class.java]
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNotesBinding.inflate(inflater, container, false)
-        
-        setupRecyclerView()
-        notesAdapter.loadSampleData()
 
-        // Fetch coursework data if passed via bundle, or use test data
-        val coursework = arguments?.getParcelable<Coursework>(Constants.COURSEWORK_RESULT_KEY)
-        if (coursework != null) {
-            requestData(coursework.ClassID, coursework.SubjectID)
-        } else {
-            // Using test data for now
-            requestData("IT-E", "IT2121")
+        setupRecyclerView()
+
+        binding.btnRegisterNotes.setOnClickListener {
+            val bottomSheet = RegisterClassBottomSheet.newInstance {
+                fetchNotes()
+            }
+            bottomSheet.show(childFragmentManager, RegisterClassBottomSheet.TAG)
         }
 
+        observeViewModel()
+        fetchNotes()
+
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchNotes()
     }
 
     private fun setupRecyclerView() {
@@ -55,30 +61,45 @@ class NotesFragment : Fragment() {
         binding.notesRV.layoutManager = LinearLayoutManager(requireContext())
     }
 
-    private fun requestData(classID: String, subjectID: String) {
-        firebaseViewmodel.getStudyMaterials(classID, subjectID)
-        firebaseViewmodel.filesResponse.observe(viewLifecycleOwner, { response ->
+    private fun fetchNotes() {
+        val coursework = arguments?.getParcelable<Coursework>(Constants.COURSEWORK_RESULT_KEY)
+        mainViewModel.fetchStudyMaterials(coursework?.SubjectID)
+    }
+
+    private fun observeViewModel() {
+        mainViewModel.studyMaterialsResponse.observe(viewLifecycleOwner) { response ->
             when (response) {
+                is NetworkResult.Loading -> {
+                    binding.notesProgressBar.visibility = View.VISIBLE
+                }
+
+                is NetworkResult.Error -> {
+                    binding.notesProgressBar.visibility = View.GONE
+                    Toast.makeText(
+                        requireContext(),
+                        response.message ?: "Failed to fetch notes",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
                 is NetworkResult.Success -> {
-                    response.data?.let {
-                        notesAdapter.setData(it)
-                    } ?: run {
-                        Toast.makeText(requireContext(), "No notes found.", Toast.LENGTH_SHORT).show()
+                    binding.notesProgressBar.visibility = View.GONE
+                    val notes = response.data ?: emptyList()
+                    if (notes.isEmpty()) {
+                        binding.notesRV.visibility = View.GONE
+                        binding.notesEmptyCard.visibility = View.VISIBLE
+                    } else {
+                        binding.notesRV.visibility = View.VISIBLE
+                        binding.notesEmptyCard.visibility = View.GONE
+                        notesAdapter.setData(notes)
                     }
                 }
-                is NetworkResult.Error -> {
-                    Toast.makeText(requireContext(), response.message ?: "Failed to fetch notes", Toast.LENGTH_SHORT).show()
-                }
-                is NetworkResult.Loading -> {
-                    // Show a loader ideally
-                }
             }
-        })
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

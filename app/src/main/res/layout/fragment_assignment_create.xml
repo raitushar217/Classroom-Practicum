@@ -139,7 +139,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Attach PDF"
+                        android:text="Attach Image"
                         android:textAlignment="center"
                         android:textColor="?attr/colorOnSurfaceVariant" />
                 </LinearLayout>
@@ -160,6 +160,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
+            android:id="@+id/tv_submit_assignment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="sans-serif-medium"

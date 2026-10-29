@@ -10,8 +10,13 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.reater.R
+import com.example.reater.viewmodels.MainViewModel
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.AndroidEntryPoint
 
 data class QuizQuestion(
     val questionText: String,
@@ -22,8 +27,11 @@ data class QuizQuestion(
     val correctAnswer: String
 )
 
+@AndroidEntryPoint
 class TeacherQuizFragment : Fragment() {
 
+    private val args: TeacherQuizFragmentArgs by navArgs()
+    private lateinit var mainViewModel: MainViewModel
     private val quizQuestions = mutableListOf<QuizQuestion>()
     private var currentQuestionNumber = 1
 
@@ -45,6 +53,8 @@ class TeacherQuizFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_teacher_quiz, container, false)
 
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+
         etQuizName = view.findViewById(R.id.etQuizName)
         etQuizDuration = view.findViewById(R.id.etQuizDuration)
         tvQuestionNumber = view.findViewById(R.id.tvQuestionNumber)
@@ -56,6 +66,9 @@ class TeacherQuizFragment : Fragment() {
         rgCorrectAnswer = view.findViewById(R.id.rgCorrectAnswer)
         btnAddNextQuestion = view.findViewById(R.id.btnAddNextQuestion)
         btnPublishQuiz = view.findViewById(R.id.btnPublishQuiz)
+
+        etQuizName.setText("${args.course.SubjectName} Quiz")
+        etQuizDuration.setText("15")
 
         updateQuestionNumberText()
 
@@ -126,16 +139,31 @@ class TeacherQuizFragment : Fragment() {
             return
         }
 
-        // Mock backend publish
-        Toast.makeText(requireContext(), "Publishing quiz '$quizName' with ${quizQuestions.size} questions...", Toast.LENGTH_LONG).show()
-        
-        // Reset after publish
-        quizQuestions.clear()
-        currentQuestionNumber = 1
-        etQuizName.text?.clear()
-        etQuizDuration.text?.clear()
-        updateQuestionNumberText()
-        clearQuestionFields()
+        val questionsPayload = quizQuestions.map { q ->
+            mapOf(
+                "questionText" to q.questionText,
+                "optionA" to q.optionA,
+                "optionB" to q.optionB,
+                "optionC" to q.optionC,
+                "optionD" to q.optionD,
+                "correctAnswer" to q.correctAnswer
+            )
+        }
+
+        val body = mapOf(
+            "subject_code" to args.course.SubjectID,
+            "section_code" to args.course.ClassID,
+            "quiz_name" to quizName,
+            "time_limit_minutes" to (quizDuration.toIntOrNull() ?: 15),
+            "questions" to questionsPayload
+        )
+
+        Toast.makeText(requireContext(), "Publishing quiz '$quizName' for ${args.course.SubjectName}...", Toast.LENGTH_SHORT).show()
+
+        mainViewModel.publishSubjectQuiz(body) { success ->
+            Toast.makeText(requireContext(), "Quiz published successfully!", Toast.LENGTH_LONG).show()
+            findNavController().popBackStack()
+        }
     }
 
     private fun clearQuestionFields() {

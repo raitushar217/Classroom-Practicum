@@ -33,8 +33,16 @@ class TeacherHomeClassAdapter: RecyclerView.Adapter<TeacherHomeClassAdapter.MyVi
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        var currentclass = classlist[position]
+        val currentclass = classlist[position]
         holder.bind(currentclass)
+        holder.itemView.setOnClickListener {
+            try {
+                val action = com.example.reater.teacherapp.fragments.TeacherHomeFragmentDirections.actionTeacherHomeFragmentToTeacherClassDetailsFragment(currentclass)
+                androidx.navigation.Navigation.findNavController(it).navigate(action)
+            } catch (e: Exception) {
+                android.util.Log.e("TeacherAdapter", "Nav error: $e")
+            }
+        }
     }
 
     override fun getItemCount(): Int {

@@ -30,9 +30,16 @@ class TeacherClassDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var nav=findNavController()
+        val nav = findNavController()
+
+        binding.ClassNameID.text = args.course.SubjectName.ifBlank { "Class Details" }
+        binding.btnBack.setOnClickListener {
+            nav.popBackStack()
+        }
+
         binding.cardViewA.setOnClickListener {
-            nav.navigate(R.id.action_teacherClassDetailsFragment_to_teacherQuizFragment)
+            val action = TeacherClassDetailsFragmentDirections.actionTeacherClassDetailsFragmentToTeacherQuizFragment(args.course)
+            nav.navigate(action)
         }
         binding.cardViewB.setOnClickListener {
             nav.navigate(R.id.action_teacherClassDetailsFragment_to_studyMaterialsFragment)
@@ -42,6 +49,20 @@ class TeacherClassDetailsFragment : Fragment() {
         }
         binding.cardViewD.setOnClickListener {
             nav.navigate(R.id.action_teacherClassDetailsFragment_to_teacherAnnouncementsFragment)
+        }
+        binding.cardViewAttendance.setOnClickListener {
+            val action = TeacherClassDetailsFragmentDirections.actionTeacherClassDetailsFragmentToTeacherParticipantsFragment2(
+                course = args.course,
+                initialTab = 1
+            )
+            nav.navigate(action)
+        }
+        binding.cardViewE.setOnClickListener {
+            val action = TeacherClassDetailsFragmentDirections.actionTeacherClassDetailsFragmentToTeacherParticipantsFragment2(
+                course = args.course,
+                initialTab = 0
+            )
+            nav.navigate(action)
         }
     }
 

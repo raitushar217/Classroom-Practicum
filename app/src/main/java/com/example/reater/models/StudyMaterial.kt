@@ -10,13 +10,13 @@ data class StudyMaterial(
     @SerializedName("timestamp")
     var timestamp: String = "",
 
-    @SerializedName("Author_Name")
+    @SerializedName("authorName")
     var authorName: String = "",
 
-    @SerializedName("Author_DP")
+    @SerializedName("authorDP")
     var authorDP: String = "",
 
-    @SerializedName("FileLocation")
+    @SerializedName("fileLocation")
     var fileLocation: String = "",
 
 ) {

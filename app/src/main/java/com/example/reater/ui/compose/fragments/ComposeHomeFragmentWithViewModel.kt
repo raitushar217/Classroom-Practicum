@@ -84,14 +84,11 @@ class ComposeHomeFragmentWithViewModel : Fragment() {
     }
 
     private fun requestAPIData() {
-        mainViewModel.getStudentClasses(applyQueries())
+        mainViewModel.fetchStudentCourses()
     }
 
     private fun applyQueries(): HashMap<String, String> {
         val queries: HashMap<String, String> = HashMap()
-        // Add your query parameters here
-        // queries["studentId"] = "12345"
-        // queries["semester"] = "current"
         return queries
     }
 }
@@ -104,7 +101,7 @@ fun HomeScreenWithViewModel(
     onError: (String) -> Unit
 ) {
     // Observe the LiveData from ViewModel
-    val coursesResponse by mainViewModel.StudentClassResponse.observeAsState()
+    val coursesResponse by mainViewModel.studentCoursesResponse.observeAsState()
 
     when (val response = coursesResponse) {
         is NetworkResult.Loading<*> -> {
@@ -113,66 +110,10 @@ fun HomeScreenWithViewModel(
         }
 
         is NetworkResult.Success<*> -> {
-            // Show home screen with data
-            // val courses = response.data ?: emptyList()
-            
-            // If you need to convert Subjects to Coursework, do it here
-            // For now, using sample data as placeholder
-            val sampleCourses = listOf(
-                Coursework(
-                    "IT2101",
-                    "COMPUTER-NETWORKS",
-                    "IT-E",
-                    "TID001",
-                    "Dr. Sudhir Sharma",
-                    "4",
-                    "3rd Semester",
-                    "JUL-NOV 2021"
-                ),
-                Coursework(
-                    "IT2104",
-                    "DATA COMMUNICATIONS (PC-4)",
-                    "IT-E",
-                    "TID0054",
-                    "Dr. Pankaj Vyas",
-                    " ",
-                    "5th Semester",
-                    "JUL-NOV 2021"
-                ),
-                Coursework(
-                    "IT2130",
-                    "Fundamentals of DataScience",
-                    "IT-E",
-                    "TID0052",
-                    "Dr. Veena Khandelwal",
-                    "1",
-                    "3rd Semester",
-                    "JUL-NOV 2022"
-                ),
-                Coursework(
-                    "IT2131",
-                    "Operating Systems",
-                    "IT-E",
-                    "TID005",
-                    "Dr. Devesh Choudhary",
-                    " ",
-                    "4th Semester",
-                    "JUL-NOV 2022"
-                ),
-                Coursework(
-                    "MA2101",
-                    "ENGINEERING MATHEMATICS – III",
-                    "IT-E",
-                    "TID001",
-                    "Dr. Sudhir Sharma",
-                    " ",
-                    "5th Semester",
-                    "JUL-NOV 2022"
-                )
-            )
+            val courses = (response as? NetworkResult.Success<List<Coursework>>)?.data ?: emptyList()
 
             HomeScreen(
-                courses = sampleCourses,
+                courses = courses,
                 studentName = "Student",
                 onClassClick = onClassClick,
                 onProfileClick = onProfileClick
@@ -184,8 +125,7 @@ fun HomeScreenWithViewModel(
             ErrorScreen(
                 message = response.message ?: "An error occurred",
                 onRetry = {
-                    // Retry loading data
-                    // mainViewModel.getStudentClasses(queries)
+                    mainViewModel.fetchStudentCourses()
                 }
             )
             
