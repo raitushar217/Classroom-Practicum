@@ -13,6 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-*.png
 dump*.xml
 log.txt
