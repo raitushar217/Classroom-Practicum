@@ -5,7 +5,7 @@ import com.example.reater.models.Quiz
 
 class Constants {
     companion object {
-        const val BASE_URL = "http://10.0.2.2:8000/"
+        const val BASE_URL = "https://iiituna-backend.onrender.com/"
         const val COURSEWORK_RESULT_KEY = "courseworkBundle"
         const val PREFS_TOKEN_FILE = "PREFS_TOKEN_FILE"
 
