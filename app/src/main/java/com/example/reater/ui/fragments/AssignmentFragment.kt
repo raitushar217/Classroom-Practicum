@@ -12,6 +12,7 @@ import com.example.reater.adapters.AssignmentAdapter
 import com.example.reater.databinding.FragmentAssignmentBinding
 import com.example.reater.utils.NetworkResult
 import com.example.reater.viewmodels.MainViewModel
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,6 +57,14 @@ class AssignmentFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.assignmentRV.adapter = mAdapter
         binding.assignmentRV.layoutManager = LinearLayoutManager(requireContext())
+        mAdapter.onItemClick = { assignment ->
+            try {
+                val action = AssignmentFragmentDirections.actionAssignmentFragmentToAssignmentDetailsFragment(assignment)
+                findNavController().navigate(action)
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), assignment.assignmentName ?: "Assignment", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun observeViewModel() {

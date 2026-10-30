@@ -69,22 +69,18 @@ fun onQuizIndexListener(questionIndex: ConstraintLayout, questionNumber: Questio
 }
 
 @BindingAdapter("onAssignmentClickListener")
-fun onAssignmentClickListener(assignmentRowLayout: ConstraintLayout, assignment: Assignment){
+fun onAssignmentClickListener(assignmentRowLayout: ConstraintLayout, assignment: Assignment?){
     assignmentRowLayout.setOnClickListener{
+        if (assignment == null) return@setOnClickListener
         try {
-            val action = AssignmentFragmentDirections.actionAssignmentFragmentToAssignmentDetailsFragment(assignment)
-            assignmentRowLayout.findNavController().navigate(action)
-        } catch (e: Exception){
-            val pdfPath = assignment.assignmentPdf?.removePrefix("/") ?: ""
-            if (pdfPath.isNotEmpty()) {
-                try {
-                    val fullUrl = if (pdfPath.startsWith("http")) pdfPath else com.example.reater.utils.Constants.BASE_URL + pdfPath
-                    val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(fullUrl))
-                    assignmentRowLayout.context.startActivity(intent)
-                } catch (ex: Exception) {
-                    android.widget.Toast.makeText(assignmentRowLayout.context, "Assignment: ${assignment.assignmentName}", android.widget.Toast.LENGTH_SHORT).show()
-                }
+            val navController = assignmentRowLayout.findNavController()
+            val currentDestId = navController.currentDestination?.id
+            if (currentDestId == com.example.reater.R.id.assignmentFragment) {
+                val action = AssignmentFragmentDirections.actionAssignmentFragmentToAssignmentDetailsFragment(assignment)
+                navController.navigate(action)
             }
+        } catch (e: Exception){
+            Log.d("onAssignmentClick", e.toString())
         }
     }
 }

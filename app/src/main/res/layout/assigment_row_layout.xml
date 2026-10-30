@@ -10,12 +10,14 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/assignment_row_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="6dp"
         android:clickable="true"
         android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
         app:cardBackgroundColor="@color/academic_card"
         app:cardCornerRadius="16dp"
         app:cardElevation="1dp"
@@ -25,8 +27,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            onAssignmentClickListener="@{current_assignment}">
+            android:padding="16dp">
 
             <!-- Hidden view4 kept for backwards ID compatibility if referenced programmatically -->
             <View

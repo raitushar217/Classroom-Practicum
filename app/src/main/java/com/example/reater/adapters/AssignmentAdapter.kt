@@ -37,10 +37,8 @@ class AssignmentAdapter: RecyclerView.Adapter<AssignmentAdapter.MyViewHolder>() 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current_assignment = assignments[position]
         holder.bind(current_assignment)
-        if (onItemClick != null) {
-            holder.itemView.setOnClickListener {
-                onItemClick?.invoke(current_assignment)
-            }
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(current_assignment)
         }
     }
 
