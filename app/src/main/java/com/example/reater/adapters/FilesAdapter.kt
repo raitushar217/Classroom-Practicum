@@ -29,9 +29,14 @@ class FilesAdapter: RecyclerView.Adapter<FilesAdapter.MyViewHolder>() {
         return MyViewHolder.from(parent)
     }
 
+    var onItemClick: ((StudyMaterial) -> Unit)? = null
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val current_material = studyMaterials[position]
         holder.bind(current_material)
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(current_material)
+        }
     }
 
     override fun getItemCount(): Int {

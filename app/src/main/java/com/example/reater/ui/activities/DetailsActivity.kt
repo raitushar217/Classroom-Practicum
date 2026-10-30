@@ -150,11 +150,10 @@ class DetailsActivity : AppCompatActivity() {
                         ).show()
                     },
                     onFileClick = { material ->
-                        Toast.makeText(
+                        com.example.reater.utils.FilePreviewHelper.openFile(
                             this@DetailsActivity,
-                            "Opening ${material.filename}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            material.fileLocation
+                        )
                     },
                     onQuizClick = { quiz ->
                         val intent = Intent(this@DetailsActivity, OngoingQuizActivity::class.java).apply {

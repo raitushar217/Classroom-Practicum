@@ -61,6 +61,21 @@ class RemoteDataSource @Inject constructor(
         return kojoTeacherApi.createAssignment(namePart, descPart, duePart, secPart, subPart, marksPart, filePart)
     }
 
+    suspend fun uploadStudyMaterial(
+        subjectCode: String,
+        caption: String,
+        file: File
+    ): Response<StudyMaterial> {
+        val subPart = subjectCode.toRequestBody("text/plain".toMediaTypeOrNull())
+        val captionPart = caption.toRequestBody("text/plain".toMediaTypeOrNull())
+        val filePart = MultipartBody.Part.createFormData(
+            "file",
+            file.name,
+            file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+        )
+        return kojoTeacherApi.uploadStudyMaterial(subPart, captionPart, filePart)
+    }
+
     suspend fun createNotice(request: CreateNoticeRequest): Response<Notice> {
         return kojoTeacherApi.createNotice(request)
     }

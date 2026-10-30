@@ -83,6 +83,11 @@
         android:name="com.example.reater.teacherapp.fragments.TeacherStudyMaterial.StudyMaterialsFragment"
         android:label="fragment_study_materials"
         tools:layout="@layout/fragment_study_materials" >
+        <argument
+            android:name="course"
+            app:argType="com.example.reater.models.Coursework"
+            app:nullable="true"
+            android:defaultValue="@null" />
         <action
             android:id="@+id/action_studyMaterialsFragment_to_addStudyMaterialFragment"
             app:destination="@id/addStudyMaterialFragment" />

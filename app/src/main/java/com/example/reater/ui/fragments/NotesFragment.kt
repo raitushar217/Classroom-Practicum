@@ -59,6 +59,9 @@ class NotesFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.notesRV.adapter = notesAdapter
         binding.notesRV.layoutManager = LinearLayoutManager(requireContext())
+        notesAdapter.onItemClick = { note ->
+            com.example.reater.utils.FilePreviewHelper.openFile(requireContext(), note.fileLocation)
+        }
     }
 
     private fun fetchNotes() {

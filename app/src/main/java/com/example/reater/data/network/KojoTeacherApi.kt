@@ -63,4 +63,12 @@ interface KojoTeacherApi {
         @Path("subjectCode") subjectCode: String,
         @Body body: com.example.reater.models.RecordAttendanceRequest
     ): Response<com.example.reater.models.AttendanceSessionResponse>
+
+    @Multipart
+    @POST("api/classes/materials/")
+    suspend fun uploadStudyMaterial(
+        @Part("subject_code") subjectCode: RequestBody,
+        @Part("caption") caption: RequestBody,
+        @Part file: MultipartBody.Part
+    ): Response<com.example.reater.models.StudyMaterial>
 }

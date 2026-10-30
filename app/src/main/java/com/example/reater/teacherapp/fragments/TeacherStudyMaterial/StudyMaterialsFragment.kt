@@ -3,52 +3,56 @@ package com.example.reater.teacherapp.fragments.TeacherStudyMaterial
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import com.example.reater.R
-import com.example.reater.databinding.FragmentStudyMaterialsBinding
-
-import java.text.SimpleDateFormat
-import java.util.*
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.reater.models.StudyMaterial
-import com.example.reater.viewmodels.FirebaseViewmodel
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.reater.adapters.FilesAdapter
+import com.example.reater.databinding.FragmentStudyMaterialsBinding
+import com.example.reater.models.StudyMaterial
+import com.example.reater.utils.FilePreviewHelper
+import com.example.reater.utils.NetworkResult
+import com.example.reater.viewmodels.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import java.io.FileOutputStream
 
+@AndroidEntryPoint
 class StudyMaterialsFragment : Fragment() {
 
     private var _binding: FragmentStudyMaterialsBinding? = null
     private val binding get() = _binding!!
 
-    private val selectedFiles = mutableListOf<Pair<String, Uri>>()
-    private lateinit var firebaseViewmodel: FirebaseViewmodel
-    var classID: String = "IT-E"
-    var subjectID: String = "IT2125"
-    var authorname = "Veena Khandelwal"
-    var authordp = "sdhasdas"
-    
-    // Modern file picker launcher using ActivityResultContracts
+    private val args: StudyMaterialsFragmentArgs by navArgs()
+    private lateinit var mainViewModel: MainViewModel
+    private val filesAdapter by lazy { FilesAdapter() }
+
+    private var selectedFileUri: Uri? = null
+    private var selectedFileName: String? = null
+
     private val filePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) {
-            val fileName = getFileName(uri)
-            selectedFiles.add(Pair(fileName, uri))
-            updateUI()
-        } else {
-            Toast.makeText(requireContext(), "No file selected", Toast.LENGTH_SHORT).show()
+            selectedFileUri = uri
+            val name = getFileName(uri)
+            selectedFileName = name
+            binding.tvSelectedFileName.text = name
+
+            if (binding.etCaption.text.isNullOrBlank()) {
+                val cleanName = name.substringBeforeLast(".")
+                binding.etCaption.setText(cleanName)
+            }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        firebaseViewmodel = ViewModelProvider(requireActivity())[FirebaseViewmodel::class.java]
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -62,42 +66,110 @@ class StudyMaterialsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.studyMaterialRv.layoutManager = LinearLayoutManager(requireContext())
-        binding.studyMaterialRv.adapter = SelectedFilesAdapter()
+        val course = args.course
+        val subjectCode = course?.SubjectID ?: "SUB1"
+        val subjectName = course?.SubjectName ?: "Subject"
 
+        binding.tvCourseSubtitle.text = "$subjectCode • $subjectName"
+        binding.studyToolbar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        setupRecyclerView()
+        setupListeners(subjectCode)
+        observeViewModel()
+
+        mainViewModel.fetchStudyMaterials(subjectCode)
+    }
+
+    private fun setupRecyclerView() {
+        binding.studyMaterialRv.layoutManager = LinearLayoutManager(requireContext())
+        binding.studyMaterialRv.adapter = filesAdapter
+        filesAdapter.onItemClick = { material ->
+            FilePreviewHelper.openFile(requireContext(), material.fileLocation)
+        }
+    }
+
+    private fun setupListeners(subjectCode: String) {
         binding.btnUpload.setOnClickListener {
-            // Launch file picker for all file types (use "application/pdf" for PDFs, etc.)
             filePickerLauncher.launch("*/*")
         }
 
         binding.btnSendToClass.setOnClickListener {
-            if (selectedFiles.isNotEmpty()) {
-                val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Calendar.getInstance().time)
-                
-                for (fileInfo in selectedFiles) {
-                    val fileLocation = UUID.randomUUID().toString()
-                    val studyMaterial = StudyMaterial(fileInfo.first, timestamp, authorname, authordp, fileLocation)
-                    firebaseViewmodel.addMaterial(studyMaterial, classID, subjectID, fileInfo.second, fileLocation)
+            val uri = selectedFileUri
+            if (uri == null) {
+                Toast.makeText(requireContext(), "Please select a file first", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val caption = binding.etCaption.text?.toString()?.trim() ?: ""
+            val finalCaption = if (caption.isNotBlank()) caption else (selectedFileName ?: "Study Material")
+
+            val cacheFile = copyUriToCache(uri, selectedFileName ?: "material.pdf")
+            if (cacheFile == null) {
+                Toast.makeText(requireContext(), "Failed to read selected file", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            binding.uploadProgressBar.visibility = View.VISIBLE
+            binding.btnSendToClass.isEnabled = false
+
+            mainViewModel.uploadStudyMaterial(subjectCode, finalCaption, cacheFile) { success ->
+                binding.uploadProgressBar.visibility = View.GONE
+                binding.btnSendToClass.isEnabled = true
+
+                if (success) {
+                    Toast.makeText(requireContext(), "Resource published to class!", Toast.LENGTH_SHORT).show()
+                    selectedFileUri = null
+                    selectedFileName = null
+                    binding.tvSelectedFileName.text = "No file selected"
+                    binding.etCaption.text?.clear()
+                    mainViewModel.fetchStudyMaterials(subjectCode)
+                } else {
+                    Toast.makeText(requireContext(), "Failed to upload resource. Please try again.", Toast.LENGTH_SHORT).show()
                 }
-                
-                Toast.makeText(requireContext(), "Uploading resources to class...", Toast.LENGTH_SHORT).show()
-                // Clear the list after sending
-                selectedFiles.clear()
-                updateUI()
             }
         }
     }
 
-    private fun updateUI() {
-        if (selectedFiles.isEmpty()) {
-            binding.emptyStateLayout.visibility = View.VISIBLE
-            binding.studyMaterialRv.visibility = View.GONE
-            binding.btnSendToClass.visibility = View.GONE
-        } else {
-            binding.emptyStateLayout.visibility = View.GONE
-            binding.studyMaterialRv.visibility = View.VISIBLE
-            binding.btnSendToClass.visibility = View.VISIBLE
-            binding.studyMaterialRv.adapter?.notifyDataSetChanged()
+    private fun observeViewModel() {
+        mainViewModel.studyMaterialsResponse.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    val materials = response.data ?: emptyList()
+                    if (materials.isEmpty()) {
+                        binding.emptyStateLayout.visibility = View.VISIBLE
+                        binding.studyMaterialRv.visibility = View.GONE
+                        binding.tvResourceCount.text = "0 resources"
+                    } else {
+                        binding.emptyStateLayout.visibility = View.GONE
+                        binding.studyMaterialRv.visibility = View.VISIBLE
+                        binding.tvResourceCount.text = "${materials.size} resources"
+                        filesAdapter.setData(materials)
+                    }
+                }
+                is NetworkResult.Error -> {
+                    Toast.makeText(requireContext(), response.message ?: "Failed to load materials", Toast.LENGTH_SHORT).show()
+                }
+                is NetworkResult.Loading -> {
+                    // Handled if needed
+                }
+            }
+        }
+    }
+
+    private fun copyUriToCache(uri: Uri, name: String): File? {
+        return try {
+            val ext = if (name.contains(".")) ".${name.substringAfterLast(".")}" else ".pdf"
+            val tempFile = File(requireContext().cacheDir, "upload_${System.currentTimeMillis()}$ext")
+            requireContext().contentResolver.openInputStream(uri)?.use { input ->
+                FileOutputStream(tempFile).use { output ->
+                    input.copyTo(output)
+                }
+            }
+            tempFile
+        } catch (e: Exception) {
+            null
         }
     }
 
@@ -120,32 +192,7 @@ class StudyMaterialsFragment : Fragment() {
                 result = result?.substring(cut + 1)
             }
         }
-        return result ?: "Unknown File"
-    }
-
-    inner class SelectedFilesAdapter : RecyclerView.Adapter<SelectedFilesAdapter.FileViewHolder>() {
-
-        inner class FileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val fileNameText: TextView = itemView.findViewById(R.id.file_name_text)
-            val btnRemove: ImageView = itemView.findViewById(R.id.btn_remove_file)
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FileViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_selected_file, parent, false)
-            return FileViewHolder(view)
-        }
-
-        override fun onBindViewHolder(holder: FileViewHolder, position: Int) {
-            holder.fileNameText.text = selectedFiles[position].first
-            holder.btnRemove.setOnClickListener {
-                selectedFiles.removeAt(position)
-                notifyItemRemoved(position)
-                notifyItemRangeChanged(position, selectedFiles.size)
-                updateUI()
-            }
-        }
-
-        override fun getItemCount(): Int = selectedFiles.size
+        return result ?: "Document.pdf"
     }
 
     override fun onDestroyView() {

@@ -42,7 +42,8 @@ class TeacherClassDetailsFragment : Fragment() {
             nav.navigate(action)
         }
         binding.cardViewB.setOnClickListener {
-            nav.navigate(R.id.action_teacherClassDetailsFragment_to_studyMaterialsFragment)
+            val action = TeacherClassDetailsFragmentDirections.actionTeacherClassDetailsFragmentToStudyMaterialsFragment(args.course)
+            nav.navigate(action)
         }
         binding.cardViewC.setOnClickListener {
             nav.navigate(R.id.action_teacherClassDetailsFragment_to_teacherAssignmentFragment)

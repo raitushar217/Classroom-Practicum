@@ -96,6 +96,36 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    val uploadStudyMaterialResponse: MutableLiveData<NetworkResult<StudyMaterial>> = MutableLiveData()
+
+    fun uploadStudyMaterial(
+        subjectCode: String,
+        caption: String,
+        file: File,
+        onComplete: ((Boolean) -> Unit)? = null
+    ) = viewModelScope.launch {
+        uploadStudyMaterialResponse.value = NetworkResult.Loading()
+        if (hasInternetConnection()) {
+            try {
+                val response = repository.remote.uploadStudyMaterial(subjectCode, caption, file)
+                if (response.isSuccessful && response.body() != null) {
+                    uploadStudyMaterialResponse.value = NetworkResult.Success(response.body()!!)
+                    fetchStudyMaterials(subjectCode)
+                    onComplete?.invoke(true)
+                } else {
+                    uploadStudyMaterialResponse.value = NetworkResult.Error("Failed: ${response.code()} ${response.message()}")
+                    onComplete?.invoke(false)
+                }
+            } catch (e: Exception) {
+                uploadStudyMaterialResponse.value = NetworkResult.Error(e.localizedMessage ?: "Upload failed")
+                onComplete?.invoke(false)
+            }
+        } else {
+            uploadStudyMaterialResponse.value = NetworkResult.Error("No Internet Connection")
+            onComplete?.invoke(false)
+        }
+    }
+
     // Teacher Classes
     val teacherCoursesResponse: MutableLiveData<NetworkResult<List<Coursework>>> = MutableLiveData()
 

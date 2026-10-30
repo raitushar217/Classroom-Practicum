@@ -52,6 +52,9 @@ class FilesFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.fileRV.adapter = filesAdapter
         binding.fileRV.layoutManager = LinearLayoutManager(requireContext())
+        filesAdapter.onItemClick = { material ->
+            com.example.reater.utils.FilePreviewHelper.openFile(requireContext(), material.fileLocation)
+        }
     }
 
     private fun observeViewModel() {

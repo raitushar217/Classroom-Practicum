@@ -19,21 +19,21 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
                     timestamp = "Apr 29, 2026",
                     authorName = "Dr. Sudhir Sharma",
                     authorDP = "",
-                    fileLocation = "https://example.com/network-notes"
+                    fileLocation = "uploads/demo_assignment.pdf"
                 ),
                 StudyMaterial(
                     filename = "Chapter 4 - Routing Basics.pdf",
                     timestamp = "Apr 28, 2026",
                     authorName = "Dr. Pankaj Vyas",
                     authorDP = "",
-                    fileLocation = "https://example.com/routing-notes"
+                    fileLocation = "uploads/demo_assignment.pdf"
                 ),
                 StudyMaterial(
                     filename = "MIDSEM Revision Notes.pdf",
                     timestamp = "Apr 27, 2026",
                     authorName = "Veena Khandelwal",
                     authorDP = "",
-                    fileLocation = "https://example.com/revision-notes"
+                    fileLocation = "uploads/demo_assignment.pdf"
                 )
             )
         }
@@ -59,8 +59,14 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
         return NotesViewHolder.from(parent)
     }
 
+    var onItemClick: ((StudyMaterial) -> Unit)? = null
+
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
-        holder.bind(notes[position])
+        val currentNote = notes[position]
+        holder.bind(currentNote)
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(currentNote)
+        }
     }
 
     override fun getItemCount(): Int {
