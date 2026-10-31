@@ -37,5 +37,17 @@ data class AvailableClass(
     val registrationStatus: String,
 
     @SerializedName("is_registered")
-    val isRegistered: Boolean
+    val isRegistered: Boolean,
+
+    @SerializedName("course_type")
+    val courseType: String? = "core",
+
+    @SerializedName("stream_name")
+    val streamName: String? = null,
+
+    @SerializedName("is_stream_locked")
+    val isStreamLocked: Boolean = false,
+
+    @SerializedName("stream_lock_reason")
+    val streamLockReason: String? = null
 ) : Parcelable

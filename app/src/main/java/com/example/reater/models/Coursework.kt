@@ -28,5 +28,11 @@ data class Coursework(
     var Semester:String,
 
     @SerializedName("AcademicSession")
-    var AcademicSession:String
+    var AcademicSession:String,
+
+    @SerializedName("CourseType")
+    var CourseType: String? = "core",
+
+    @SerializedName("StreamName")
+    var StreamName: String? = null
 ):Parcelable

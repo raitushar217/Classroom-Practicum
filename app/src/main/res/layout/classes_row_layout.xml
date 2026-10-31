@@ -124,6 +124,23 @@
                     android:textColor="@color/academic_text_secondary"
                     android:textSize="12sp"
                     tools:text="Dr. John Doe" />
+
+                <!-- Stream Badge if present -->
+                <TextView
+                    android:id="@+id/streamPill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:background="@drawable/rounded_corner_subdetail"
+                    android:backgroundTint="#2E7D32"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="1dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold"
+                    android:visibility="@{individual_course.streamName != null ? android.view.View.VISIBLE : android.view.View.GONE}"
+                    android:text="@{individual_course.streamName}"
+                    tools:text="AI_ML" />
             </LinearLayout>
 
             <!-- Trailing Action Chevron -->

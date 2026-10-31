@@ -36,10 +36,22 @@ class AvailableClassAdapter(
             binding.creditsText.text = "${item.credits} Credits • ${item.semester}"
             binding.teacherNameText.text = "Teacher: ${item.teacherName}"
 
+            if (!item.streamName.isNullOrEmpty()) {
+                binding.streamBadge.visibility = View.VISIBLE
+                val formattedStream = item.streamName.replace("_", "/")
+                binding.streamBadge.text = "$formattedStream Stream"
+            } else {
+                binding.streamBadge.visibility = View.GONE
+            }
+
             if (item.isRegistered) {
                 binding.registerButton.isEnabled = false
                 binding.registerButton.text = "Registered"
                 binding.registerButton.alpha = 0.6f
+            } else if (item.isStreamLocked) {
+                binding.registerButton.isEnabled = false
+                binding.registerButton.text = "Locked"
+                binding.registerButton.alpha = 0.45f
             } else {
                 binding.registerButton.isEnabled = true
                 binding.registerButton.text = "Register"
